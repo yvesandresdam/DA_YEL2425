@@ -2,12 +2,24 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * DOCUMENTATION FOR CLASS TypeFinder
+ * <br>
+ * + _static_ FileWork(): void
+ * <br>
+ * Works with file and UI classes
+ * <br>
+ * + getFileType(byte[]): FileType
+ * <br>
+ * Returns the file type of the file
+ *
+ */
 public class TypeFinder {
-    public static void FileWork() {
 
+    public static void FileWork() {
         String path = UI.UIGetFilePath();
 
-        // A efectos de DEBUG
+        // Debugging purposes
         path = "images/imagen1.bmp";
         path = "images/imagenJPG.jpg";
 

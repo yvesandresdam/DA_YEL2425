@@ -1,14 +1,29 @@
 import java.util.Scanner;
 
+/**
+ * DOCUMENTATION FOR CLASS UI
+ * <br>
+ * + _static_ displayFileType(FileType): void<br>
+ * Displays information on the console
+ * <br>
+ * + _static_ UIGetFilePath(): String
+ * <br>
+ * The program asks the user for the filepath
+ * <br>
+ * + _static_ UIFileIsBMP(Boolean): void
+ * <br>
+ * Displays if the file is BMP
+ *
+ */
 public class UI {
-    public static void DisplayFileType(FileType fileType){
-        System.out.println("El archivo es de tipo: " + fileType);
+    public static void displayFileType(FileType fileType){
+        System.out.println("The file is type: " + fileType);
     }
 
     public static String UIGetFilePath(){
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Introduce la ruta del archivo BMP: ");
+        System.out.println("Set the path of the file: ");
         String filePath = scanner.nextLine();
         scanner.close();
 
@@ -17,8 +32,8 @@ public class UI {
 
     public static void UIFileIsBMP(Boolean check){
         if(check)
-            System.out.println("El archivo es de tipo BMP");
+            System.out.println("File is BMP type");
         else
-            System.out.println("El archivo no es de tipo BMP");
+            System.out.println("File is not BMP type");
     }
 }
