@@ -42,10 +42,8 @@ public class TypeFinder {
     }
 
     private static FileType getFileType(byte[] buffer) {
-        byte header1 = buffer[0];
-        byte header2 = buffer[1];
 
-        if ((header1 == 0x42) && (header2 == 0x4D))
+        if ((buffer[0] == 0x42) && (buffer[1] == 0x4D))
             return FileType.BMP;
         return FileType.UNKNOWN;
     }

@@ -19,15 +19,15 @@ public class FileSystem {
     }
 
     public void overwriteFile() {
-        System.out.println("Quiere sobreescribir el archivo?\ns/n");
+        System.out.println("Do you want to overwrite the file?\ny/n");
 
         Scanner sc = new Scanner(System.in);
         String userAnswer = sc.nextLine();
 
         while (!(userAnswer.equals("s") || userAnswer.equals("n")))
-            System.out.println("Introduzca un valor valido");
+            System.out.println("Set a valid value");
 
-        if (userAnswer.equals("s"))
+        if (userAnswer.equals("y"))
             overwriteFile = true;
 
     }
@@ -51,7 +51,7 @@ public class FileSystem {
             pw.printf("%d\t" + insertLine + "\n", currentLine);
             currentLine++;
         } catch (IOException e) {
-            System.out.println("Error de entrada");
+            System.out.println("Input error");
         } finally {
             pw.close();
         }

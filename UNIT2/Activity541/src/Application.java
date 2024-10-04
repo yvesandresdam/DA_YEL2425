@@ -1,4 +1,13 @@
-import java.util.Scanner;
+/**
+ * <b>DOCUMENTATION FOR Class Application </b>
+ * <br>
+ * This class writes or overwrites a file set by the user with given text lines.
+ * <br>
+ * <b>+ setFlagRunning(Boolean) : void</b>
+ * <br>
+ * Sets true or false the static variable appRunning.
+ * false stops the main loop.
+ */
 
 public class Application {
 
