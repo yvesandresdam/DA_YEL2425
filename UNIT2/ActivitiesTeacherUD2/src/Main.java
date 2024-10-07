@@ -105,6 +105,18 @@ public class Main {
     or phone. Data must be stored and retrieved in a file named contacts.obj.
     If it doesn’t exist, it must be created.
 
+    8.2. ACTIVITIES
+    ---------------
+
+    1. Rewrite the previous code just to show the name and surname of the
+    contacts (all together) with a phone number. The phone number will be
+    chosen in this order: cell, work, home.
+
+    2. Write an utility to allow the user to change the format of the file created in
+    activity 7.1 from obj to XML and reverse. Check point 9 to know how to
+    reuse your code. You can use this link as a guide:
+    https://zetcode.com/java/sax/
+
     10. BIBLIOGRAPHY
     ---------------
 

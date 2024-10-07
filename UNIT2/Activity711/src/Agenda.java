@@ -15,4 +15,8 @@ public class Agenda {
             System.out.println(c);
         }
     }
+
+    public Contact findContactWithName(String name){
+        return contactList.get(0);
+    }
 }
