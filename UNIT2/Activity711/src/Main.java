@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
         System.out.println("Activity 7.1.1");
-        System.out.println("Serialization");
+        System.out.println("Agenda App");
 
         Application app = new Application();
         app.launch();

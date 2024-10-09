@@ -1,100 +1,99 @@
 import javax.tools.FileObject;
 import java.io.*;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Application {
 
     // Debugging purposes 'filePath'
-    private String resultFilePath = "resources/contacts.obj";
+    private String agendaFilePath = "resources/contacts.dat";
     private Agenda agenda = new Agenda();
 
-
+    // This function launches the main Loop
     public void launch() {
         UI.UIWelcome();
-        UI.UIMainPage();
-        UI.UISelection();
 
-        //loadAgenda();
-        //userSelectOption();
+        boolean running = true;
+        while (running) {
+            UI.UIMainPage();
+            UI.UISelection();
 
-        //Contact contact = agenda.createContact();
-        //serializeContact(contact);
-
-        viewAgenda();
-    }
-
-    private void viewAgenda() {
-        try {
-            ObjectInputStream view = new ObjectInputStream(new FileInputStream(resultFilePath));
-            Contact contact = (Contact) view.readObject();
-            System.out.println(contact.getName());
-        } catch (IOException e1) {
-            e1.getMessage();
-        } catch (ClassNotFoundException e2){
-            e2.getMessage();
-        }
-
-
-
-    }
-
-    private void serializeContact(Contact contact) {
-        try {
-            ObjectOutputStream agendaWrite = new ObjectOutputStream(new FileOutputStream(resultFilePath));
-            agendaWrite.writeObject(contact);
-        } catch (IOException e) {
-            e.getMessage();
+            running = userSelectOption();
+            if (!running)
+                break;
         }
     }
 
-    private void loadAgenda() {
-        try {
-            ObjectInputStream agendaFile = new ObjectInputStream(new FileInputStream(resultFilePath));
-            int numObjects = agendaFile.readInt();
-            for (int i = 0; numObjects > 0; numObjects--) {
-                Contact contact = (Contact) agendaFile.readObject();
-            }
-        } catch (IOException e) {
-            System.out.println("Error");
-        } catch (ClassNotFoundException e2) {
-            System.out.println("Error");
-        }
+    // PRIVATE FUNCTIONS
+    private boolean userSelectOption() {
+        boolean running = true;
 
-
-    }
-
-    private void userSelectOption() {
         Scanner scannerInput = new Scanner(System.in);
         String selection = scannerInput.next();
 
         switch (selection) {
             case "A":
-                userAddContact();
+                Contact c = agenda.createContact();
+                agenda.addContact(c);
                 break;
             case "L":
-                userListContact();
+                agenda.listAgenda();
                 break;
             case "F":
-                userFindContact();
+                Contact c2 = agenda.findContactWithName();
+                agenda.displayContact(c2);
+                break;
+            case "E":
+                running = false;
                 break;
             default:
                 System.out.println("Insert a valid option");
                 break;
         }
-        scannerInput.close();
+        return running;
     }
 
-    private void userAddContact() {
-        agenda.createContact();
+    private void serializeAgenda(){}
+    private void deSerializeAgenda(){}
+
+
+
+
+
+    /*
+    private void serializeContact(List<Contact> listContacts) {
+        try {
+            ObjectOutputStream objectOutput = new ObjectOutputStream(new FileOutputStream(resultFilePath));
+
+            //objectOutput.writeInt(2);
+            for (Contact c : listContacts) {
+                objectOutput.writeObject(c);
+            }
+            objectOutput.close();
+        } catch (IOException e) {
+            e.getMessage();
+        }
     }
 
-    private void userListContact() {
 
+    private void viewAgenda(List<Contact> listContacts) {
+        try {
+            ObjectInputStream displayAgenda = new ObjectInputStream(new FileInputStream(resultFilePath));
+            //int numberCount = displayAgenda.readInt();
+
+            int numberCount = listContacts.size();
+            // Iterar sobre todos los contactos
+            for (int i = 0; i < numberCount; i++) {
+                Contact contact = (Contact) displayAgenda.readObject();
+                //displayContact(contact);  // Mostrar el contacto
+            }
+        } catch (ClassNotFoundException |
+                 IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void userFindContact() {
-
-    }
-
+     */
 }

@@ -23,9 +23,8 @@ public class Agenda {
         UI.UISetDescription();
         String description = scannerInput.nextLine();
 
-        scannerInput.close();
 
-        // AÑADIR CONTACTO A LA LISTA
+        // CREAR UN CONTACTO NUEVO
 
         // METODO 1. EL CONSTRUCTOR
         // Contact contact = new Contact(name,surname,email,phone,description);
@@ -39,7 +38,6 @@ public class Agenda {
         contact.setEmail(email);
         contact.setDescription(description);
         return contact;
-
     }
 
     public void addContact(Contact contact) {
@@ -48,20 +46,25 @@ public class Agenda {
         contactList.add(contact);
     }
 
-    public void displayContactList() {
-        int i = 0;
+    public void listAgenda() {
         for (Contact contact : contactList) {
-            i++;
-            System.out.printf("Contact number: %d\nName: %s\nSurname: %s\n", i, contact.getName(), contact.getSurname());
+            System.out.printf("Name: %s\nSurname: %s\n", contact.getName(), contact.getSurname());
             System.out.printf("Phone: %s\nEmail: %s\nDescription: %s\n", contact.getPhone(), contact.getEmail(), contact.getDescription());
         }
     }
 
-    public Contact findContactWithName(String name) {
+    public Contact findContactWithName() {
+        Scanner scannerInput = new Scanner(System.in);
+        String name = scannerInput.nextLine();
         for (Contact contact : contactList) {
-            if(contact.getName().equals(name))
+            if (contact.getName().equals(name))
                 return contact;
         }
         return null;
+    }
+
+    public void displayContact(Contact contact){
+        System.out.printf("Name: %s\nSurname: %s\n", contact.getName(), contact.getSurname());
+        System.out.printf("Phone: %s\nEmail: %s\nDescription: %s\n", contact.getPhone(), contact.getEmail(), contact.getDescription());
     }
 }
