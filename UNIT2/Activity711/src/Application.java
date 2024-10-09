@@ -1,29 +1,28 @@
-import javax.tools.FileObject;
 import java.io.*;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Application {
 
-    // Debugging purposes 'filePath'
-    private String agendaFilePath = "resources/contacts.dat";
+    // Debugging purposes 'agendaPath'
+    private String agendaPath = "resources/contacts.dat";
     private Agenda agenda = new Agenda();
 
     // This function launches the main Loop
     public void launch() {
-        UI.UIWelcome();
+        welcomeMessage();
+        deSerializeAgenda();
 
-        boolean running = true;
-        while (running) {
-            UI.UIMainPage();
-            UI.UISelection();
-
-            running = userSelectOption();
-            if (!running)
-                break;
+        {   // main Loop of the aplication
+            boolean running = true;
+            while (running) {
+                displayMainPage();
+                running = userSelectOption();
+                if (!running)
+                    break;
+            }
         }
+
+        serializeAgenda();
     }
 
     // PRIVATE FUNCTIONS
@@ -55,45 +54,42 @@ public class Application {
         return running;
     }
 
-    private void serializeAgenda(){}
-    private void deSerializeAgenda(){}
-
-
-
-
-
-    /*
-    private void serializeContact(List<Contact> listContacts) {
+    private void deSerializeAgenda() {
         try {
-            ObjectOutputStream objectOutput = new ObjectOutputStream(new FileOutputStream(resultFilePath));
-
-            //objectOutput.writeInt(2);
-            for (Contact c : listContacts) {
-                objectOutput.writeObject(c);
+            ObjectInputStream fileAgenda = new ObjectInputStream(new FileInputStream(agendaPath));
+            if (fileAgenda != null) {
+                int numberContacts = fileAgenda.readInt();
+                for (int i = 0; i < numberContacts; i++) {
+                    Contact c = (Contact) fileAgenda.readObject();
+                    agenda.addContact(c);
+                }
             }
-            objectOutput.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.fillInStackTrace();
+        }
+    }
+
+    private void serializeAgenda() {
+        try {
+            ObjectOutputStream outputAgenda = new ObjectOutputStream(new FileOutputStream(agendaPath));
+            int numberContacts = agenda.getAgendaSize();
+            outputAgenda.writeInt(numberContacts);
+            for (int i = 0; i < numberContacts; i++) {
+                Contact c = agenda.getContactAt(i);
+                outputAgenda.writeObject(c);
+            }
+            outputAgenda.close();
         } catch (IOException e) {
-            e.getMessage();
+            e.getStackTrace();
         }
     }
 
-
-    private void viewAgenda(List<Contact> listContacts) {
-        try {
-            ObjectInputStream displayAgenda = new ObjectInputStream(new FileInputStream(resultFilePath));
-            //int numberCount = displayAgenda.readInt();
-
-            int numberCount = listContacts.size();
-            // Iterar sobre todos los contactos
-            for (int i = 0; i < numberCount; i++) {
-                Contact contact = (Contact) displayAgenda.readObject();
-                //displayContact(contact);  // Mostrar el contacto
-            }
-        } catch (ClassNotFoundException |
-                 IOException e) {
-            e.printStackTrace();
-        }
+    private void welcomeMessage() {
+        UI.UIWelcome();
     }
 
-     */
+    private void displayMainPage() {
+        UI.UIMainPage();
+        UI.UISelection();
+    }
 }

@@ -1,7 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * DOCUMENTACION<br>
+ * <b>Class Agenda</b> contains a List of contacts.<br>
+ * also CRUD operations with the List of contacts.
+ */
 public class Agenda {
     private List<Contact> contactList = new ArrayList<>();
 
@@ -49,7 +53,8 @@ public class Agenda {
     public void listAgenda() {
         for (Contact contact : contactList) {
             System.out.printf("Name: %s\nSurname: %s\n", contact.getName(), contact.getSurname());
-            System.out.printf("Phone: %s\nEmail: %s\nDescription: %s\n", contact.getPhone(), contact.getEmail(), contact.getDescription());
+            System.out.printf("Phone: %s\nEmail: %s\nDescription: %s\n\n", contact.getPhone(), contact.getEmail(), contact.getDescription());
+            System.out.println(" * * * * * ");
         }
     }
 
@@ -66,5 +71,14 @@ public class Agenda {
     public void displayContact(Contact contact){
         System.out.printf("Name: %s\nSurname: %s\n", contact.getName(), contact.getSurname());
         System.out.printf("Phone: %s\nEmail: %s\nDescription: %s\n", contact.getPhone(), contact.getEmail(), contact.getDescription());
+        System.out.println(" * * * * * ");
+    }
+
+    public int getAgendaSize(){
+        return contactList.size();
+    }
+
+    public Contact getContactAt(int position){
+        return contactList.get(position);
     }
 }

@@ -1,4 +1,8 @@
 import java.io.Serializable;
+/**
+ * DOCUMENTATION<br>
+ * <b>Class Contact</b> contains the information of the agenda's contacts.
+ */
 public class Contact implements Serializable {
     private String name;
     private String surname;
@@ -14,9 +18,7 @@ public class Contact implements Serializable {
         this.description = description;
     }
 
-    public Contact(){
-
-    }
+    public Contact(){}
 
     public String getName() {
         return name;

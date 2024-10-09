@@ -1,3 +1,7 @@
+/**
+ * DOCUMENTATION UI<br>
+ * <b>User Interface</b> titles and messages
+ */
 public class UI {
     private final static String WELCOME_MESSAGE = "Welcome to your personal Agenda Contact JAVACONTACT";
 
@@ -5,7 +9,7 @@ public class UI {
     private final static String ADD_CONTACT = "'A'- Add a contact to Agenda";
     private final static String LIST_CONTACT = "'L'- List the contacts of Agenda";
     private final static String FIND_CONTACT = "'F'- Find a Contact in Agenda";
-    private final static String EXIT = "'E' - Exit program Agenda";
+    private final static String EXIT = "'E'- Exit program Agenda";
 
     private final static String SET_NAME_CONTACT = "Set the name of the contact";
     private final static String SET_SURNAME_CONTACT = "Set the surname of the contact";
