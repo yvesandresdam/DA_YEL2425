@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Application {
 
     // Debugging purposes 'agendaPath'
-    private String agendaPath = "resources/contacts.dat";
+    private String agendaPath = "contacts.obj";
     private Agenda agenda = new Agenda();
 
     // This function launches the main Loop

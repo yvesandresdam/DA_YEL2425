@@ -31,6 +31,17 @@ public class UI {
         System.out.println(FIND_CONTACT);
         System.out.println(EXIT);
     }
+    public static void UIAddContact(){
+        System.out.println(ADD_CONTACT);
+    }
+
+    public static void UIListContact(){
+        System.out.println(LIST_CONTACT);
+    }
+
+    public static void UIFindContact(){
+        System.out.println(FIND_CONTACT);
+    }
 
     public static void UISetName(){
         System.out.println(SET_NAME_CONTACT);
