@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ProyectCreateXML:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ProyectCreateXML_jar</output-path>
+    <root id="archive" name="ProyectCreateXML.jar">
+      <element id="module-output" name="ProyectCreateXML" />
+    </root>
+  </artifact>
+</component>
