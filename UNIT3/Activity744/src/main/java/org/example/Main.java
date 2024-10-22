@@ -13,7 +13,9 @@ public class Main {
         // DBProceduresCalling.connectDB();
 
         // Checking the Procedures list
-        // procedure n1 = findByJob
+        // procedure n1 = findByJob         ||      ProcedureType.FIND_BY_JOB
+        // procedure n2 = findByDepartment  ||      ProcedureType.FIND_BY_DEPARTMENT
+
         int numberPocedure = 1;
         DBProceduresCalling.callingProcedures(numberPocedure);
     }

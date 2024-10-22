@@ -20,6 +20,7 @@ public class DBPC {
             System.out.println(e.getMessage());
         }
     }
+
     public void callingProcedures(int numberProcedure) {
         String URL = "jdbc:postgresql://localhost:5432/" + databaseName;
 
@@ -30,7 +31,7 @@ public class DBPC {
                 procedureName = String.format("{call %s('SALESMAN')}",findByJob);
             }
             else if(numberProcedure == 2){
-                procedureName = String.format("{call %s('10')}",findByDepartment);
+                procedureName = String.format("{call %d('10')}",findByDepartment);
             }
 
             CallableStatement statement = connection.prepareCall(procedureName);
