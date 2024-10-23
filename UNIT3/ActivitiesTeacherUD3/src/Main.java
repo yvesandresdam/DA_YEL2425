@@ -51,7 +51,7 @@ public class Main {
 
     6.1. ACTIVITIES
     ---------------
-    
+
     1. Rewrite activity 4.1.2 to use a PreparedStatement. Instead of introducing
     one subject at a time, allow the user to introduce as many subjects as
     desired, using a loop, ending with a breaking signal (a null subject code,
