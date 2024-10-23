@@ -1,0 +1,25 @@
+-- FUNCTION: public.employees_find_by_name(character varying)
+
+-- DROP FUNCTION IF EXISTS public.employees_find_by_name(character varying);
+
+CREATE OR REPLACE FUNCTION public.employees_find_by_name(
+	employee_name character varying)
+    RETURNS SETOF employee 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+DECLARE
+my_employee employee;
+
+BEGIN
+	FOR my_employee IN
+	SELECT * FROM EMPLOYEE
+	WHERE ename LIKE employee_name
+	LOOP
+		RETURN NEXT my_employee;
+	END LOOP;
+END
+$BODY$;

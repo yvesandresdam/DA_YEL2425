@@ -16,8 +16,8 @@ my_employee employee;
 
 BEGIN
 	FOR my_employee IN
-	SELECT * FROM EMPLOYEE
-	where job like pjob
+	SELECT * FROM employee
+	WHERE job LIKE pjob
 	LOOP
 		RETURN NEXT my_employee;
 	END LOOP;

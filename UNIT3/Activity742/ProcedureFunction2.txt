@@ -15,7 +15,9 @@ DECLARE
 my_employee employee;
 
 BEGIN
-	FOR my_employee IN SELECT * FROM employee WHERE deptno=department
+	FOR my_employee IN 
+	SELECT * FROM employee 
+	WHERE deptno=department
 	LOOP
 	 	RETURN NEXT my_employee;
 	END LOOP;
