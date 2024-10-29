@@ -6,8 +6,10 @@
   <session-factory>
     <property name="jdbc:postgresql://localhost:5432/Employees"/>
     <property name="connection.driver_class">org.postgresql.Driver</property>
+    <!--
     <property name="postgres"/>
     <property name="postgres"/>
+    -->
       <property name="connection.url">jdbc:postgresql://localhost:5432/Employees</property>
       <property name="connection.username">postgres</property>
       <property name="connection.password">postgres</property>
