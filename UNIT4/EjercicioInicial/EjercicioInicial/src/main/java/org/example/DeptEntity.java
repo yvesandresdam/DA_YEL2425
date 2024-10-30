@@ -1,7 +1,6 @@
 package org.example;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -15,21 +14,34 @@ public class DeptEntity {
     private Long id;
 
     @Column(name = "dname")
-    private String nombre;
+    private String departmentName;
+
+    @Column(name = "loc")
+    private String departmentLocation;
 
     public List<EmployeeEntity> getEmployees() {
         return employees;
     }
-
     public void setEmployees(List<EmployeeEntity> employees) {
         this.employees = employees;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getDepartmentName(){
+        return departmentName;
     }
-
+    public void setDepartmentName(String value){
+        departmentName = value;
+    }
     public Long getId() {
         return id;
+    }
+    public void setId(long ID){
+        id = ID;
+    }
+    public String getDepartmentLocation() {
+        return departmentLocation;
+    }
+    public void setDepartmentLocation(String departmentLocation) {
+        this.departmentLocation = departmentLocation;
     }
 }
