@@ -1,5 +1,10 @@
 package Controller;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class Controller {
 
     // DEV: Controller Class
@@ -13,15 +18,15 @@ public class Controller {
     // + mainWindowUser: preferences and personal data
 
 
-    public void launchApp(){
+    public void launchApp() {
 
         connectingDatabase();
-        // CONNECTING THE POSGRES DATABASE
+        // CONNECTING THE POSTGRES DATABASE
 
         startApp();
         // SPLASH AND WELCOME MESSAGE
 
-        while(!userGranted) {
+        while (!userGranted) {
             loginPattern();
         }
         // SUCESFULL LOGIN WITH USER/PASSWORD
@@ -36,41 +41,42 @@ public class Controller {
 
 
     // WIREFRAME FUNCTIONS
-    private void connectingDatabase(){
+    private void connectingDatabase() {
+        ConnectionDB connectionDB = new ConnectionDB();
+        connectionDB.setConnection("OnlineMarket", "postgres", "postgres");
+        connectionDB.startConnection();
+    }
+
+    private void startApp() {
 
     }
 
-    private void startApp(){
-
-    }
-
-    private void loginPattern(){
+    private void loginPattern() {
         login.mainLoopLogin();
     }
 
-    private void mainWindowUser(){
+    private void mainWindowUser() {
         displayUserData();
         // Display user data
 
         changePersonalData();
         // Modify user data
-        
+
         backToLogin();
         // Login with another username
-        
+
         quitApplication();
         // Exit the application
     }
 
-    
 
     // PRIVATE FUNCTIONS
-    
-    private void displayUserData(){
-        
+
+    private void displayUserData() {
+
     }
-    
-    private void changePersonalData(){
+
+    private void changePersonalData() {
         changeUserName();
         changeUserPassword();
         changeBussinessName();
@@ -94,10 +100,10 @@ public class Controller {
     private void changeUserName() {
     }
 
-    private void backToLogin(){
+    private void backToLogin() {
     }
-    
-    private void quitApplication(){
+
+    private void quitApplication() {
     }
 }
 
