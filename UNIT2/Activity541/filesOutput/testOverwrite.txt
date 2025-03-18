@@ -1,3 +1,0 @@
-1	Testing1
-2	Testing2
-3	Overwriting text
