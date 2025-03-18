@@ -1,4 +1,0 @@
-Evidentemente la parte práctica de Spring no cumple con los criterios exigidos durante estos dias de clase.
-La parte positiva es que SÍ puedo hablar de la creación de un nuevo proyecto tipo SpringBoot.
-Contiene las dependencias y está preparado para recibir una base de datos Postgres.
-Puedo decir que tengo la base de datos 'employee' y además, estoy trabajando en una base de datos nueva.
