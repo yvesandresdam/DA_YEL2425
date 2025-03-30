@@ -1,0 +1,4 @@
+He subido una version de mi API REST.
+Aun queda mucho trabajo, pero he hecho pruebas y funciona.
+Que te parece si completo la API, y el martes me acerco a la clase de 
+repaso de las 7? Puedo llevarme el portatil, para ver el proyecto en vivo.
