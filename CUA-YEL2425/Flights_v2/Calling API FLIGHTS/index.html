@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+
+<body>
+    <button onclick="addCity()">ADD CITY</button>
+    <script>
+        function Fetch() {
+            fetch("http://localhost:8080/flights_api/City")
+                .then(response => response.json())
+                .then(data => showData(data))
+        }
+
+        function showData(data) {
+            console.log(data);
+        }
+
+        Fetch();
+
+        function addCity() {
+            fetch("http://localhost:8080/flights_api/City", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    code: "MAD",
+                    name: "Madrid",
+                    state: "Madrid",
+                    country: "Spain"
+                })
+            })
+                .then(response => response.json())
+                .then(data => console.log("Ciudad creada:", data))
+                .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+
+</html>

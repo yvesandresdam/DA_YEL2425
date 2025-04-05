@@ -1,7 +1,9 @@
-package andres.flights_v2.entities;
+package andres.flights_v2.models.entities;
 
 import jakarta.persistence.*;
 
+// Hibernate class that maps the entity 'airport'.
+// The 'id' is 'code'.
 @Entity
 @Table(name = "airports")
 public class AirportEntity {
@@ -11,10 +13,6 @@ public class AirportEntity {
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
-
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "city", nullable = false)
-//    private CityEntity city;
 
     @Column(name = "city", nullable = false, length = 100)
     private String city;
@@ -39,7 +37,7 @@ public class AirportEntity {
         return city;
     }
 
-    public void String(String city) {
+    public void setCity(String city) {
         this.city = city;
     }
 

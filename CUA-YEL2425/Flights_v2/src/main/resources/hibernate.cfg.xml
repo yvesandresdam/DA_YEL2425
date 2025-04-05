@@ -8,9 +8,11 @@
     <property name="connection.driver_class">org.postgresql.Driver</property>
     <property name="connection.username">postgres</property>
     <property name="connection.password">postgres</property>
-    <mapping class="andres.flights_v2.entities.CityEntity"/>
-    <mapping class="andres.flights_v2.entities.AirportEntity"/>
-    <mapping class="andres.flights_v2.entities.PassengerEntity"/>
+    <mapping class="andres.flights_v2.models.entities.AirportEntity"/>
+    <mapping class="andres.flights_v2.models.entities.PassengerEntity"/>
+    <mapping class="andres.flights_v2.models.entities.FlightEntity"/>
+    <mapping class="andres.flights_v2.models.entities.TicketEntity"/>
+
 
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
