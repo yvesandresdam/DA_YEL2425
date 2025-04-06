@@ -1,4 +1,4 @@
-package andres.flights_v2.models.dto;
+package andres.flights_v2.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

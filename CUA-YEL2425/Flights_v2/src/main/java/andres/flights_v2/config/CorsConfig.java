@@ -7,7 +7,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig {
-
+    // Clase dada por ChatGPT
+    // Con esta clase es posible evitar la proteccion Cors en peticiones POST desde aplicaciones JAVASCRIPT
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {

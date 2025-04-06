@@ -1,12 +1,9 @@
 package andres.flights_v2.models.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 // Hibernate class that maps the entity 'passenger'.
-// The 'id' is 'passportno'.
+// The id of the entity is 'passportno'.
 
 @Entity
 @Table(name = "passengers")

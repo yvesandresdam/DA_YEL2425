@@ -3,7 +3,7 @@ package andres.flights_v2.models.entities;
 import jakarta.persistence.*;
 
 // Hibernate class that maps the entity 'flight'.
-// The 'id' is 'flightcode'.
+// The id of the entity is 'flightCode'.
 
 @Entity
 @Table(name = "flights")

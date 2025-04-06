@@ -1,5 +1,5 @@
 function Fetch(){
-    fetch("http://localhost:8080/flights_api/City")
+    fetch("http://localhost:8080/flights_api/Flights/Origins")
     .then(response => response.json())
     .then(data => showData(data))
 }

@@ -1,11 +1,10 @@
 package andres.flights_v2.models.entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 // Hibernate class that maps the entity 'tickets'.
-// The 'id' is 'ticket_number'.
+// The id of the entity is 'ticket_number'.
 
 @Entity
 @Table(name = "tickets")
