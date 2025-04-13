@@ -1,10 +1,8 @@
 package andres.flights_v2.service;
 
 import andres.flights_v2.models.dao.ITicketEntityDAO;
-import andres.flights_v2.dto.TicketDTO;
 import andres.flights_v2.models.entities.TicketEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

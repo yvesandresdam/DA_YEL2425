@@ -1,37 +1,72 @@
 package andres.flights_v2.models.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-// Hibernate class that maps the entity 'flight'.
-// The id of the entity is 'flightCode'.
+@NamedQueries({
+        @NamedQuery(
+                name = "FlightEntity.findAllOrigins",
+                query = "SELECT DISTINCT f.source FROM FlightEntity f"
+        ),
+        @NamedQuery(
+                name = "FlightEntity.findDestinationsByOrigin",
+                query = "SELECT f.destination FROM FlightEntity f WHERE f.source.code = :originId"
+        ),
+        @NamedQuery(
+                name = "FlightEntity.findFlightCodeByRoute",
+                query = "SELECT f.flightCode FROM FlightEntity f WHERE f.source.code = :originId AND f.destination.code = :destinationId"
+        )
+})
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "FlightEntity.countSeatNumber",
+                query = "SELECT yveeli_01_available_seats_int(:flightCode, :dateOfTravel)",
+                resultClass = Integer.class
+        ),
+        @NamedNativeQuery(
+                name = "FlightEntity.checkSeatAvailability",
+                query = "SELECT yveeli_02_available_seats_bool(:flightCode, :dateOfTravel)",
+                resultClass = Boolean.class
+        )
+})
 
 @Entity
 @Table(name = "flights")
 public class FlightEntity {
     @Id
+    @Size(max = 10)
     @Column(name = "flight_code", nullable = false, length = 10)
     private String flightCode;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "source", nullable = false)
     private AirportEntity source;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "destination", nullable = false)
     private AirportEntity destination;
 
+    @Size(max = 10)
+    @NotNull
     @Column(name = "arrival", nullable = false, length = 10)
     private String arrival;
 
+    @Size(max = 10)
+    @NotNull
     @Column(name = "departure", nullable = false, length = 10)
     private String departure;
 
+    @Size(max = 10)
     @Column(name = "status", length = 10)
     private String status;
 
     @Column(name = "duration")
     private Integer duration;
 
+    @Size(max = 10)
     @Column(name = "flight_type", length = 10)
     private String flightType;
 
@@ -131,5 +166,4 @@ public class FlightEntity {
     public void setSeats(Integer seats) {
         this.seats = seats;
     }
-
 }

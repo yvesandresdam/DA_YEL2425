@@ -9,9 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 
 @Repository
-public interface ITicketEntityDAO extends CrudRepository<TicketEntity,Integer> {
-    // Named Query_ function returns true if passenger has already bought a ticket
-    @Query(value = "SELECT yveeli_03_ticket_already_exists(:travelDate, :passportNo)", nativeQuery = true)
+public interface ITicketEntityDAO extends CrudRepository<TicketEntity, Integer> {
     Boolean checkTicketExists(@Param("travelDate") LocalDate travelDate,
                               @Param("passportNo") String passportNo);
 }

@@ -7,8 +7,8 @@ public class TicketDTO {
     private LocalDate dateOfBooking;
     private LocalDate dateOfTravel;
     private LocalDate dateOfCancellation;
-    private String passportno; // ID del pasajero
-    private String flightCode; // Código del vuelo
+    private String passportno;
+    private String flightCode;
     private Integer price;
 
     public TicketDTO() {

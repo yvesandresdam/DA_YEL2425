@@ -1,10 +1,15 @@
 package andres.flights_v2.models.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
-// Hibernate class that maps the entity 'tickets'.
-// The id of the entity is 'ticket_number'.
+@NamedNativeQuery(
+        name = "TicketEntity.checkTicketExists",
+        query = "SELECT yveeli_03_ticket_already_exists(:travelDate, :passportNo)",
+        resultClass = Boolean.class
+)
 
 @Entity
 @Table(name = "tickets")
@@ -15,19 +20,23 @@ public class TicketEntity {
     @Column(name = "ticket_number", nullable = false)
     private Integer id;
 
+    @NotNull
     @Column(name = "date_of_booking", nullable = false)
     private LocalDate dateOfBooking;
 
+    @NotNull
     @Column(name = "date_of_travel", nullable = false)
     private LocalDate dateOfTravel;
 
     @Column(name = "date_of_cancellation")
     private LocalDate dateOfCancellation;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "passportno", nullable = false)
     private PassengerEntity passportno;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "flight_code", nullable = false)
     private FlightEntity flightCode;
