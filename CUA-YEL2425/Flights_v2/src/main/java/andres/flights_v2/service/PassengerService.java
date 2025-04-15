@@ -14,6 +14,21 @@ public class PassengerService {
     private IPassengerEntityDAO passengerDAO;
 
     // Functions at SERVICE LAYER -
+    public PassengerDTO findPassengerByPassport(String passport) {
+        PassengerEntity entity = passengerDAO.findByPassportno(passport);
+        if (entity == null) {
+            return null; // o lanzar una excepción si prefieres
+        }
+        return new PassengerDTO(
+                entity.getPassportno(),
+                entity.getFirstname(),
+                entity.getLastname(),
+                entity.getAddress(),
+                entity.getPhone(),
+                entity.getSex()
+        );
+    }
+    /* TODO
     public Optional<PassengerDTO> findPassengerByPassport(String passport) {
         Optional<PassengerEntity> passengerEntity = passengerDAO.findByPassportno(passport);
         return passengerEntity
@@ -21,6 +36,8 @@ public class PassengerService {
                         new PassengerDTO(entity.getPassportno(), entity.getFirstname(), entity.getLastname(), entity.getAddress(), entity.getPhone(), entity.getSex())
                 );
     }
+
+     */
     public void createPassenger(PassengerEntity passenger) {
         validatePassenger(passenger);
         passengerDAO.save(passenger);

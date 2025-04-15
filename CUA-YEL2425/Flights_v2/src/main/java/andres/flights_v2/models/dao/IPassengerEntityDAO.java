@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface IPassengerEntityDAO extends CrudRepository<PassengerEntity, String> {
-    Optional<PassengerEntity> findByPassportno(String passport);
+    PassengerEntity findByPassportno(String passport);
+    //Optional<PassengerEntity> findByPassportno(String passport);
 }

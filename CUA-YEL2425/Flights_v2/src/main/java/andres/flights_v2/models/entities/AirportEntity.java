@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -11,15 +12,17 @@ import jakarta.validation.constraints.Size;
 @Table(name = "airports")
 public class AirportEntity {
     @Id
+    @NotBlank
     @Size(max = 4)
     @Column(name = "code", nullable = false, length = 4)
     private String code;
 
     @Size(max = 100)
-    @NotNull
+    @NotBlank
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    // _getters / setters_
     public String getCode() {
         return code;
     }

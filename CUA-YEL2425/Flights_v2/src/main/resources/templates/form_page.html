@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Flight Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        select,
+        input[type="text"] {
+            width: 300px;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 300px;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #3498db;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+<div class="form-container">
+    <form>
+        <!-- DATE OF FLIGHT -->
+        <div class="form-group">
+            <label for="flightDate">Date of Flight:</label>
+            <input type="date" id="flightDate" name="flightDate"
+            th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+        </div>
+
+        <!-- SOURCE -->
+        <div class="form-group">
+            <label for="source">Source:</label>
+            <select id="source" name="source">
+                <option th:each="airport : ${origins}"
+                        th:value="${airport.code}"
+                        th:text="${airport.code} + ' - ' + ${airport.name}">
+                </option>
+            </select>
+        </div>
+
+        <!-- DESTINATION -->
+        <div class="form-group">
+            <label for="destination">Destination:</label>
+            <select id="destination" name="destination">
+                <option value="">Select a destination</option>
+            </select>
+        </div>
+
+        <!-- PASSPORT -->
+        <div class="form-group">
+            <label for="passport">Passport:</label>
+            <input type="text" id="passport" name="passport" placeholder="Introduce el pasaporte">
+        </div>
+
+        <!-- FLIGHT CODE -->
+        <div class="form-group">
+            <label for="flightCode">Code of Flight:</label>
+            <input type="text" id="flightCode" name="flightCode">
+        </div>
+
+        <!-- BUTTON BUY TICKET -->
+        <button type="submit" id="buyTicket">Buy Ticket</button>
+    </form>
+</div>
+
+
+<script>
+    const originSelect = document.getElementById('source');
+    const destinationSelect = document.getElementById('destination');
+    const flightCodeSelect = document.getElementById('flightCode');
+
+    // Events Listeners
+    document.addEventListener('DOMContentLoaded', function () {
+        const originId = originSelect.value;
+        if (originId) {
+            loadDestinationsForAirportWithId(originId);
+        }
+    });
+
+    originSelect.addEventListener('change', function () {
+        const originId = this.value;
+        if (originId) {
+            loadDestinationsForAirportWithId(originId);
+        }
+    });
+
+    destinationSelect.addEventListener('click', function () {
+        const originId = originSelect.value;
+        const destinationId = destinationSelect.value;
+        if (originId) {
+            loadFlightCode(originId, destinationId);
+        }
+    });
+
+    function loadDestinationsForAirportWithId(originId) {
+        fetch(`http://localhost:8080/flights_api/Web/Flights/Destinations/${originId}`)
+            .then(response => response.json())
+            .then(data => {
+                destinationSelect.innerHTML = ''; // limpiar opciones anteriores
+                data.forEach(dest => {
+                    const option = document.createElement('option');
+                    option.value = dest.code;
+                    option.text = dest.name;
+                    destinationSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching destinations:', error);
+            });
+    }
+
+    // DESTINATION FUNCTIONS
+    function loadFlightCode(originId, destinationId) {
+        fetch(`http://localhost:8080/flights_api/Web/Flights/${originId}/${destinationId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                flightCodeSelect.value = data[0];
+            })
+            .catch(error => {
+                console.error('Error fetching destinations:', error);
+            });
+    }
+
+</script>
+</body>
+
+</html>

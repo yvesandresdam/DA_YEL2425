@@ -1,6 +1,7 @@
 package andres.flights_v2.models.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -39,23 +40,23 @@ public class FlightEntity {
     @Column(name = "flight_code", nullable = false, length = 10)
     private String flightCode;
 
-    @NotNull
+    @NotBlank
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "source", nullable = false)
     private AirportEntity source;
 
-    @NotNull
+    @NotBlank
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "destination", nullable = false)
     private AirportEntity destination;
 
     @Size(max = 10)
-    @NotNull
+    @NotBlank
     @Column(name = "arrival", nullable = false, length = 10)
     private String arrival;
 
     @Size(max = 10)
-    @NotNull
+    @NotBlank
     @Column(name = "departure", nullable = false, length = 10)
     private String departure;
 
@@ -78,6 +79,9 @@ public class FlightEntity {
 
     @Column(name = "seats")
     private Integer seats;
+
+
+    // _getters / setters_
 
     public String getFlightCode() {
         return flightCode;

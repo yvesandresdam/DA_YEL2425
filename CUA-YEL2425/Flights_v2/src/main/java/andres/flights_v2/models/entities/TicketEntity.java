@@ -1,6 +1,7 @@
 package andres.flights_v2.models.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -20,23 +21,24 @@ public class TicketEntity {
     @Column(name = "ticket_number", nullable = false)
     private Integer id;
 
-    @NotNull
+    @NotBlank
     @Column(name = "date_of_booking", nullable = false)
     private LocalDate dateOfBooking;
 
-    @NotNull
+    @NotBlank
     @Column(name = "date_of_travel", nullable = false)
     private LocalDate dateOfTravel;
 
+    @NotBlank
     @Column(name = "date_of_cancellation")
     private LocalDate dateOfCancellation;
 
-    @NotNull
+    @NotBlank
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "passportno", nullable = false)
     private PassengerEntity passportno;
 
-    @NotNull
+    @NotBlank
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "flight_code", nullable = false)
     private FlightEntity flightCode;

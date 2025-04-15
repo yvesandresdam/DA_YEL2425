@@ -8,6 +8,8 @@ public class PassengerDTO {
     private String phone;
     private String sex;
 
+    public PassengerDTO(){};
+
     public PassengerDTO(String passportno, String firstname, String lastname, String address, String phone, String sex) {
         this.passportno = passportno;
         this.firstname = firstname;

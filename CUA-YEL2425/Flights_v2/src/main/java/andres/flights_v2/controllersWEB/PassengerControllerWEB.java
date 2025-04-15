@@ -1,22 +1,20 @@
-package andres.flights_v2.controllers;
+package andres.flights_v2.controllersWEB;
 
 import andres.flights_v2.dto.PassengerDTO;
 import andres.flights_v2.models.entities.PassengerEntity;
 import andres.flights_v2.service.PassengerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Optional;
 
-// Controller showing data info about entity 'Passenger'.
-// The endpoints are managed with the 'passengerService' class.
-
-@RestController
-@RequestMapping("/Passenger")
-public class PassengerController {
+@Controller
+@RequestMapping("/Web/Passenger")
+public class PassengerControllerWEB {
     @Autowired
     private PassengerService passengerService;
 
@@ -30,25 +28,6 @@ public class PassengerController {
                 Map<String, String> response = Map.of(
                         "error", "Passenger not found",
                         "message", "Would you like to create a new passport?",
-                        "createPassportLink", "/Web/Passenger/CreateNewPassenger"
-                );
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-            }
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        }
-    }
-    /* TODO
-    @GetMapping("/Passport/{passportno}")
-    public ResponseEntity<?> findPassengerByPassport(@PathVariable String passportno) {
-        try {
-            Optional<?> passenger = passengerService.findPassengerByPassport(passportno);
-            if (passenger.isPresent()) {
-                return ResponseEntity.ok(passenger.get());
-            } else {
-                Map<String, String> response = Map.of(
-                        "error", "Passenger not found",
-                        "message", "Would you like to create a new passport?",
                         "createPassportLink", "/CreateNewPassenger"
                 );
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -58,9 +37,14 @@ public class PassengerController {
         }
     }
 
-     */
-    @PostMapping("/CreateNewPassenger")
-    public ResponseEntity<?> createNewPassenger(@RequestBody PassengerDTO passengerDTO) {
+    @GetMapping("/CreateNewPassenger")
+    public String showCreateForm(Model model) {
+        model.addAttribute("passenger", new PassengerDTO());
+        return "new_user_page";
+    }
+
+    @PostMapping("/CreateNewPassenger/New")
+    public String createNewPassenger(@ModelAttribute PassengerDTO passengerDTO, Model model) {
         try {
             PassengerEntity passengerEntity = new PassengerEntity();
             passengerEntity.setPassportno(passengerDTO.getPassportno());
@@ -72,12 +56,12 @@ public class PassengerController {
 
             passengerService.createPassenger(passengerEntity);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(
-                    Map.of("message", "Passenger created successfully", "passportno", passengerEntity.getPassportno())
-            );
+            model.addAttribute("message", "Passenger created successfully!");
+            model.addAttribute("passportno", passengerEntity.getPassportno());
+
+            return "success_page";
         } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+            return "error_page";
         }
     }
 }
-

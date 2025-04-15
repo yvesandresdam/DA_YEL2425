@@ -4,7 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -12,30 +14,38 @@ import jakarta.validation.constraints.Size;
 public class PassengerEntity {
     @Id
     @Size(max = 10)
+    @Pattern(regexp = "^[A-Za-z][0-9]{8}$", message = "Passport must start with a letter followed by 8 numbers")
     @Column(name = "passportno", nullable = false, length = 10)
     private String passportno;
 
     @Size(max = 20)
-    @NotNull
+    @NotBlank
     @Column(name = "firstname", nullable = false, length = 20)
     private String firstname;
 
     @Size(max = 20)
-    @NotNull
+    @NotBlank
     @Column(name = "lastname", nullable = false, length = 20)
     private String lastname;
 
     @Size(max = 100)
+    @NotBlank
     @Column(name = "address", length = 100)
     private String address;
 
     @Size(max = 12)
+    @NotBlank
+    @Pattern(regexp = "\\+34\\d{9}", message = "Phone number must start with +34 and a 9 characters length")
     @Column(name = "phone", length = 12)
     private String phone;
 
     @Size(max = 1)
+    @NotBlank
+    @Pattern(regexp = "^[MF]$", message = "Sex must be 'M' or 'F'")
     @Column(name = "sex", length = 1)
     private String sex;
+
+    // _getters / setters_
 
     public String getPassportno() {
         return passportno;
