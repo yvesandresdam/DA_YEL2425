@@ -19,8 +19,9 @@ public interface IFlightsEntityDAO extends CrudRepository<FlightEntity, String> 
 
     List<AirportEntity> findDestinationsByOrigin(@Param("originId") String originId);
 
-    Optional<List<String>> findFlightCodeByRoute(@Param("originId") String originId, @Param("destinationId") String destinationId);
+    List<String> findFlightCodeByRoute(@Param("originId") String originId, @Param("destinationId") String destinationId);
 
+    // PostgreSQL Function call
     Integer countSeatNumber(@Param("flightCode") String flightCode);
 
     Boolean checkSeatAvailability(@Param("flightCode") String flightCode, @Param("dateOfTravel") LocalDate dateOfTravel);

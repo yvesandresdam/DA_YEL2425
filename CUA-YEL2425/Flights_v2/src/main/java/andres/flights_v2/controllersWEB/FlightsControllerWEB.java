@@ -32,24 +32,15 @@ public class FlightsControllerWEB {
 
     @GetMapping("/Destinations/{originId}")
     @ResponseBody
-    public ResponseEntity<?> getDestinations(@PathVariable String originId) {
-        try {
-            List<AirportEntity> destinations = flightService.findDestinationsByOrigin(originId);
-            return ResponseEntity.ok(destinations);
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        }
+    public List<AirportEntity> findDestinationsByOrigin(@PathVariable String originId) {
+        return flightService.findDestinationsByOrigin(originId);
     }
 
     @GetMapping("/{originId}/{destinationId}")
-    public ResponseEntity<?> findFlightCodeByRoute(@PathVariable String originId,
-                                                   @PathVariable String destinationId) {
-        try {
-            Optional<List<String>> flightCode = flightService.findFlightCodeByRoute(originId, destinationId);
-            return ResponseEntity.ok(flightCode.orElse(new ArrayList<String>()));
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        }
+    @ResponseBody
+    public List<String> findFlightCodeByRoute(@PathVariable String originId,
+                                              @PathVariable String destinationId) {
+       return flightService.findFlightCodeByRoute(originId, destinationId);
     }
 }
 

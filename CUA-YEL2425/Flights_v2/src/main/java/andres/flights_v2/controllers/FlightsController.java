@@ -28,34 +28,20 @@ public class FlightsController {
     }
 
     @GetMapping("/Destinations/{originId}")
-    public ResponseEntity<?> findDestinationsByOrigin(@PathVariable String originId) {
-        try {
-            List<AirportEntity> flightDestinations = flightService.findDestinationsByOrigin(originId);
-            return ResponseEntity.ok(flightDestinations);
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        }
+    public List<AirportEntity> findDestinationsByOrigin(@PathVariable String originId) {
+        return flightService.findDestinationsByOrigin(originId);
     }
 
     @GetMapping("/{originId}/{destinationId}")
-    public ResponseEntity<?> findFlightCodeByRoute(@PathVariable String originId,
+    public List<String> findFlightCodeByRoute(@PathVariable String originId,
                                                    @PathVariable String destinationId) {
-        try {
-            Optional<List<String>> flightCode = flightService.findFlightCodeByRoute(originId, destinationId);
-            return ResponseEntity.ok(flightCode.orElse(new ArrayList<String>()));
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        }
+        return flightService.findFlightCodeByRoute(originId, destinationId);
     }
 
+    // DB functions call
     @GetMapping("/Available/{flight_code}/{flight_date}")
-    public ResponseEntity<?> checkSeatAvailability(@PathVariable String flight_code, @PathVariable LocalDate flight_date) {
-        try {
-            boolean seatsAvailable = flightService.areSeatsAvailable(flight_code, flight_date);
-            return ResponseEntity.ok(seatsAvailable);
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        }
+    public Boolean checkSeatAvailability(@PathVariable String flight_code, @PathVariable LocalDate flight_date) {
+        return flightService.areSeatsAvailable(flight_code, flight_date);
     }
 }
 

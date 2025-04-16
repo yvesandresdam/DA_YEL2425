@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface IAirportsEntityDAO extends CrudRepository<FlightEntity, String> {
-    List<String> findAllOrigins();
 }
 

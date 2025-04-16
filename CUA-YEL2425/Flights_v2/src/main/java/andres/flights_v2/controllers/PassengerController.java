@@ -21,44 +21,30 @@ public class PassengerController {
     private PassengerService passengerService;
 
     @GetMapping("/Passport/{passportno}")
-    public ResponseEntity<?> findPassengerByPassport(@PathVariable String passportno) {
-        try {
-            PassengerDTO passenger = passengerService.findPassengerByPassport(passportno);
-            if (passenger != null) {
-                return ResponseEntity.ok(passenger);
-            } else {
-                Map<String, String> response = Map.of(
-                        "error", "Passenger not found",
-                        "message", "Would you like to create a new passport?",
-                        "createPassportLink", "/Web/Passenger/CreateNewPassenger"
-                );
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-            }
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        }
+    public PassengerEntity findPassengerByPassport(@PathVariable String passportno) {
+        return passengerService.findPassengerByPassport(passportno);
     }
-    /* TODO
-    @GetMapping("/Passport/{passportno}")
-    public ResponseEntity<?> findPassengerByPassport(@PathVariable String passportno) {
-        try {
-            Optional<?> passenger = passengerService.findPassengerByPassport(passportno);
-            if (passenger.isPresent()) {
-                return ResponseEntity.ok(passenger.get());
-            } else {
-                Map<String, String> response = Map.of(
-                        "error", "Passenger not found",
-                        "message", "Would you like to create a new passport?",
-                        "createPassportLink", "/CreateNewPassenger"
-                );
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-            }
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        }
-    }
+    // TODO
+//    @GetMapping("/Passport/{passportno}")
+//    public ResponseEntity<?> findPassengerByPassport(@PathVariable String passportno) {
+//        try {
+//            Optional<?> passenger = passengerService.findPassengerByPassport(passportno);
+//            if (passenger.isPresent()) {
+//                return ResponseEntity.ok(passenger.get());
+//            } else {
+//                Map<String, String> response = Map.of(
+//                        "error", "Passenger not found",
+//                        "message", "Would you like to create a new passport?",
+//                        "createPassportLink", "/CreateNewPassenger"
+//                );
+//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+//            }
+//        } catch (IllegalArgumentException ex) {
+//            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+//        }
+//    }
 
-     */
+
     @PostMapping("/CreateNewPassenger")
     public ResponseEntity<?> createNewPassenger(@RequestBody PassengerDTO passengerDTO) {
         try {
@@ -70,7 +56,7 @@ public class PassengerController {
             passengerEntity.setPhone(passengerDTO.getPhone());
             passengerEntity.setSex(passengerDTO.getSex());
 
-            passengerService.createPassenger(passengerEntity);
+            passengerService.createPassenger(passengerDTO);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(
                     Map.of("message", "Passenger created successfully", "passportno", passengerEntity.getPassportno())
@@ -80,4 +66,3 @@ public class PassengerController {
         }
     }
 }
-

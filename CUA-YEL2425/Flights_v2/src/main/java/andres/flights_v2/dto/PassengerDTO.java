@@ -1,11 +1,36 @@
 package andres.flights_v2.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 public class PassengerDTO {
+
+    @Size(max = 10)
+    @Pattern(regexp = "^[A-Za-z][0-9]{8}$", message = "Passport must start with a letter followed by 8 numbers")
+    @NotBlank
     private String passportno;
+
+    @Size(max = 20)
+    @NotBlank
     private String firstname;
+
+    @Size(max = 20)
+    @NotBlank
     private String lastname;
+
+    @Size(max = 100)
+    @NotBlank
     private String address;
+
+    @Size(max = 12)
+    @NotBlank
+    @Pattern(regexp = "\\+34\\d{9}", message = "Phone number must start with +34 and a 9 characters length")
     private String phone;
+
+    @Size(max = 1)
+    @NotBlank
+    @Pattern(regexp = "^[MF]$", message = "Sex must be 'M' or 'F'")
     private String sex;
 
     public PassengerDTO(){};

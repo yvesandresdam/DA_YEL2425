@@ -6,44 +6,31 @@ import andres.flights_v2.models.entities.PassengerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class PassengerService {
     @Autowired
     private IPassengerEntityDAO passengerDAO;
+    public void createPassenger(PassengerDTO passengerDTO) {
+        // validatePassenger(passengerDTO);
+        // Convertir el DTO a una entidad
+        PassengerEntity passengerEntity = new PassengerEntity();
+        passengerEntity.setPassportno(passengerDTO.getPassportno());
+        passengerEntity.setFirstname(passengerDTO.getFirstname());
+        passengerEntity.setLastname(passengerDTO.getLastname());
+        passengerEntity.setAddress(passengerDTO.getAddress());
+        passengerEntity.setPhone(passengerDTO.getPhone());
+        passengerEntity.setSex(passengerDTO.getSex());
 
-    // Functions at SERVICE LAYER -
-    public PassengerDTO findPassengerByPassport(String passport) {
-        PassengerEntity entity = passengerDAO.findByPassportno(passport);
-        if (entity == null) {
-            return null; // o lanzar una excepción si prefieres
-        }
-        return new PassengerDTO(
-                entity.getPassportno(),
-                entity.getFirstname(),
-                entity.getLastname(),
-                entity.getAddress(),
-                entity.getPhone(),
-                entity.getSex()
-        );
-    }
-    /* TODO
-    public Optional<PassengerDTO> findPassengerByPassport(String passport) {
-        Optional<PassengerEntity> passengerEntity = passengerDAO.findByPassportno(passport);
-        return passengerEntity
-                .map(entity ->
-                        new PassengerDTO(entity.getPassportno(), entity.getFirstname(), entity.getLastname(), entity.getAddress(), entity.getPhone(), entity.getSex())
-                );
+        // Guardar la entidad en la base de datos usando el DAO
+        passengerDAO.save(passengerEntity);
     }
 
-     */
-    public void createPassenger(PassengerEntity passenger) {
-        validatePassenger(passenger);
-        passengerDAO.save(passenger);
+    public PassengerEntity findPassengerByPassport(String passportno){
+        return passengerDAO.findByPassportno(passportno);
     }
 
-    // Validating Functions at SERVICE LAYER -
+    // VALIDATING FUNCTIONS
+    // SERVICE LAYER
     private void validatePassport(String passport) {
         if (passport == null || passport.trim().isEmpty()) {
             throw new IllegalArgumentException("Passport identity is mandatory.");
@@ -53,8 +40,6 @@ public class PassengerService {
         }
     }
     private void validatePassenger(PassengerEntity passenger) {
-        validatePassport(passenger.getPassportno());
-
         if (passenger.getFirstname() == null || passenger.getFirstname().trim().isEmpty()) {
             throw new IllegalArgumentException("First name is mandatory.");
         }

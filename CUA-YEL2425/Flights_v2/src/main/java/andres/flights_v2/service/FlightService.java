@@ -14,21 +14,19 @@ public class FlightService {
     @Autowired
     private IFlightsEntityDAO flightDAO;
 
-    // FUNCTIONALITY
     public List<AirportEntity> findAllOrigins() {
         return flightDAO.findAllOrigins();
     }
     public List<AirportEntity> findDestinationsByOrigin(String originCode) {
-        validateAirportCode(originCode, "OriginId");
+        //validateAirportCode(originCode, "OriginId");
         return flightDAO.findDestinationsByOrigin(originCode);
     }
-    public Optional<List<String>> findFlightCodeByRoute(String origin, String destination) {
-        validateAirportCode(origin, "OriginId");
-        validateAirportCode(destination, "DestinationId");
+    public List<String> findFlightCodeByRoute(String origin, String destination) {
+        //validateAirportCode(origin, "OriginId");
+        //validateAirportCode(destination, "DestinationId");
         return flightDAO.findFlightCodeByRoute(origin, destination);
     }
 
-    // VALIDATE Functions at SERVICE LAYER -
     private void validateAirportCode(String code, String fieldName) {
         if (code == null || code.trim().isEmpty()) {
             throw new IllegalArgumentException(fieldName + " is mandatory.");
