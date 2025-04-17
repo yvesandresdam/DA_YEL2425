@@ -29,7 +29,6 @@ public class TicketEntity {
     @Column(name = "date_of_travel", nullable = false)
     private LocalDate dateOfTravel;
 
-    @NotBlank
     @Column(name = "date_of_cancellation")
     private LocalDate dateOfCancellation;
 

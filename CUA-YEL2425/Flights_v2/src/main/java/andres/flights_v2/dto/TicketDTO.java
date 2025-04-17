@@ -1,20 +1,40 @@
 package andres.flights_v2.dto;
 
+import andres.flights_v2.models.entities.FlightEntity;
+import andres.flights_v2.models.entities.PassengerEntity;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class TicketDTO {
+    @Id
+    @NotBlank
     private Integer id;
+
+    @NotBlank
     private LocalDate dateOfBooking;
+
+    @NotBlank
     private LocalDate dateOfTravel;
+
     private LocalDate dateOfCancellation;
-    private String passportno;
-    private String flightCode;
+
+    @NotBlank
+    @Size(max = 10)
+    private PassengerEntity passportno;
+
+    @NotBlank
+    @Size(max = 10)
+    private FlightEntity flightCode;
+
     private Integer price;
 
     public TicketDTO() {
     }
 
-    public TicketDTO(Integer id, LocalDate dateOfBooking, LocalDate dateOfTravel, LocalDate dateOfCancellation, String passportno, String flightCode, Integer price) {
+    public TicketDTO(Integer id, LocalDate dateOfBooking, LocalDate dateOfTravel, LocalDate dateOfCancellation, PassengerEntity passportno, FlightEntity flightCode, Integer price) {
         this.id = id;
         this.dateOfBooking = dateOfBooking;
         this.dateOfTravel = dateOfTravel;
@@ -57,19 +77,19 @@ public class TicketDTO {
         this.dateOfCancellation = dateOfCancellation;
     }
 
-    public String getPassportno() {
+    public PassengerEntity getPassportno() {
         return passportno;
     }
 
-    public void setPassportno(String passportno) {
+    public void setPassportno(PassengerEntity passportno) {
         this.passportno = passportno;
     }
 
-    public String getFlightCode() {
+    public FlightEntity getFlightCode() {
         return flightCode;
     }
 
-    public void setFlightCode(String flightCode) {
+    public void setFlightCode(FlightEntity flightCode) {
         this.flightCode = flightCode;
     }
 

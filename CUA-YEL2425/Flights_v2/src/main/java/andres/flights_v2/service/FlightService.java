@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FlightService {
@@ -18,15 +17,13 @@ public class FlightService {
         return flightDAO.findAllOrigins();
     }
     public List<AirportEntity> findDestinationsByOrigin(String originCode) {
-        //validateAirportCode(originCode, "OriginId");
         return flightDAO.findDestinationsByOrigin(originCode);
     }
     public List<String> findFlightCodeByRoute(String origin, String destination) {
-        //validateAirportCode(origin, "OriginId");
-        //validateAirportCode(destination, "DestinationId");
         return flightDAO.findFlightCodeByRoute(origin, destination);
     }
 
+    // VALIDATING FUNCTIONS - SERVICE LAYER -
     private void validateAirportCode(String code, String fieldName) {
         if (code == null || code.trim().isEmpty()) {
             throw new IllegalArgumentException(fieldName + " is mandatory.");
@@ -48,13 +45,11 @@ public class FlightService {
     // Number of available seats
     public Integer countSeatsAvailable(String flightCode) {
         validateFlightCode(flightCode);
-        Integer number = flightDAO.countSeatNumber(flightCode);
-        return number;
+        return flightDAO.countSeatNumber(flightCode);
     }
-    // Boolean with available seats
-    public boolean areSeatsAvailable(String flightCode, LocalDate dateOfFlight) {
+    // Boolean if there are available seats
+    public boolean areSeatsAvailable(String flightCode, LocalDate flightDate) {
         validateFlightCode(flightCode);
-        Boolean available = flightDAO.checkSeatAvailability(flightCode, dateOfFlight);
-        return available != null && available;
+        return flightDAO.checkSeatAvailability(flightCode, flightDate);
     }
 }

@@ -13,9 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-// Controller showing data info about entity 'Flights'.
-// The endpoints are managed with the 'flightService' object.
-
 @RestController
 @RequestMapping("/Flights")
 public class FlightsController {
@@ -38,7 +35,6 @@ public class FlightsController {
         return flightService.findFlightCodeByRoute(originId, destinationId);
     }
 
-    // DB functions call
     @GetMapping("/Available/{flight_code}/{flight_date}")
     public Boolean checkSeatAvailability(@PathVariable String flight_code, @PathVariable LocalDate flight_date) {
         return flightService.areSeatsAvailable(flight_code, flight_date);

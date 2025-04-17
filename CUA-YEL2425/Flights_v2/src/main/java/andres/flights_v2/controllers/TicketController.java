@@ -19,9 +19,6 @@ import java.util.Map;
 public class TicketController {
     @Autowired
     private TicketService ticketService;
-    public TicketEntity findTicketById(Integer id) {
-        return ticketService.findTicketById(id);
-    }
 
     @GetMapping("/{flightDate}/{passportno}")
     public ResponseEntity<Boolean> checkIfTicketExists(@PathVariable("flightDate")
@@ -32,30 +29,9 @@ public class TicketController {
     }
 
     @PostMapping("/createTicket")
-    public ResponseEntity<?> createTicket(@RequestBody TicketDTO ticketDTO) {
-        try {
-            TicketEntity ticketEntity = new TicketEntity();
-
-            ticketEntity.setDateOfBooking(ticketDTO.getDateOfBooking());
-            ticketEntity.setDateOfTravel(ticketDTO.getDateOfTravel());
-            ticketEntity.setDateOfCancellation(ticketDTO.getDateOfCancellation());
-            ticketEntity.setPrice(ticketDTO.getPrice());
-
-            //TODO
-            PassengerEntity passenger = new PassengerEntity();
-            passenger.setPassportno("Y1234567");
-            FlightEntity flight = new FlightEntity();
-            flight.setFlightCode("YEL12");
-            ticketEntity.setPassportno(passenger);
-            ticketEntity.setFlightCode(flight);
-
-            ticketService.createTicket(ticketEntity);
-            return ResponseEntity.status(HttpStatus.CREATED).body(
-                    Map.of("message", "Passenger created successfully", "passportno", passenger.getPassportno())
-            );
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
-        }
+    public boolean createTicket(@RequestBody TicketDTO ticketDTO) {
+        ticketService.createTicket(ticketDTO);
+        return true;
     }
 }
 

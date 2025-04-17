@@ -29,18 +29,15 @@ public class PassengerEntity {
     private String lastname;
 
     @Size(max = 100)
-    @NotBlank
     @Column(name = "address", length = 100)
     private String address;
 
     @Size(max = 12)
-    @NotBlank
     @Pattern(regexp = "\\+34\\d{9}", message = "Phone number must start with +34 and a 9 characters length")
     @Column(name = "phone", length = 12)
     private String phone;
 
     @Size(max = 1)
-    @NotBlank
     @Pattern(regexp = "^[MF]$", message = "Sex must be 'M' or 'F'")
     @Column(name = "sex", length = 1)
     private String sex;

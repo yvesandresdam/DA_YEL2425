@@ -16,14 +16,13 @@ import java.util.Optional;
 public interface IFlightsEntityDAO extends CrudRepository<FlightEntity, String> {
 
     List<AirportEntity> findAllOrigins();
-
     List<AirportEntity> findDestinationsByOrigin(@Param("originId") String originId);
-
     List<String> findFlightCodeByRoute(@Param("originId") String originId, @Param("destinationId") String destinationId);
 
-    // PostgreSQL Function call
+    // PostgreSQL Functions calls
+    // Function that counts the number of available seats
     Integer countSeatNumber(@Param("flightCode") String flightCode);
-
+    // Function that checks if there's available seats
     Boolean checkSeatAvailability(@Param("flightCode") String flightCode, @Param("dateOfTravel") LocalDate dateOfTravel);
 }
 

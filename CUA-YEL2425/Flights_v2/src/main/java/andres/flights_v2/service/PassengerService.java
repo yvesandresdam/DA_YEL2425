@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 public class PassengerService {
     @Autowired
     private IPassengerEntityDAO passengerDAO;
-    public void createPassenger(PassengerDTO passengerDTO) {
+
+    public boolean createPassenger(PassengerDTO passengerDTO) {
         // validatePassenger(passengerDTO);
         // Convertir el DTO a una entidad
         PassengerEntity passengerEntity = new PassengerEntity();
@@ -22,10 +23,15 @@ public class PassengerService {
         passengerEntity.setSex(passengerDTO.getSex());
 
         // Guardar la entidad en la base de datos usando el DAO
-        passengerDAO.save(passengerEntity);
+        try {
+            passengerDAO.save(passengerEntity);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public PassengerEntity findPassengerByPassport(String passportno){
+    public PassengerEntity findPassengerByPassport(String passportno) {
         return passengerDAO.findByPassportno(passportno);
     }
 
@@ -39,6 +45,7 @@ public class PassengerService {
             throw new IllegalArgumentException("Passport identity number must be 8 characters long.");
         }
     }
+
     private void validatePassenger(PassengerEntity passenger) {
         if (passenger.getFirstname() == null || passenger.getFirstname().trim().isEmpty()) {
             throw new IllegalArgumentException("First name is mandatory.");

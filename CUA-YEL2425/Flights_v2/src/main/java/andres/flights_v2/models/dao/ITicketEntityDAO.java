@@ -10,6 +10,10 @@ import java.time.LocalDate;
 
 @Repository
 public interface ITicketEntityDAO extends CrudRepository<TicketEntity, Integer> {
+    TicketEntity getTicketEntityById(Integer id);
+
+    // PostgreSQL Functions calls
+    // Function that check if user has bought a ticket already
     Boolean checkTicketExists(@Param("travelDate") LocalDate travelDate,
                               @Param("passportNo") String passportNo);
 }
