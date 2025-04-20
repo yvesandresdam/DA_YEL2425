@@ -21,18 +21,16 @@ public class TicketController {
     private TicketService ticketService;
 
     @GetMapping("/{flightDate}/{passportno}")
-    public ResponseEntity<Boolean> checkIfTicketExists(@PathVariable("flightDate")
+    public boolean checkIfTicketExists(@PathVariable("flightDate")
                                                        @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate flightDate,
                                                        @PathVariable("passportno") String passportNo) {
         boolean exists = ticketService.checkTicketExists(flightDate, passportNo);
-        return ResponseEntity.ok(exists);
+        return exists;
     }
 
     @PostMapping("/createTicket")
     public boolean createTicket(@RequestBody TicketDTO ticketDTO) {
-        ticketService.createTicket(ticketDTO);
-        return true;
+        boolean ticketSuccess = ticketService.createTicket(ticketDTO);
+        return ticketSuccess;
     }
 }
-
-

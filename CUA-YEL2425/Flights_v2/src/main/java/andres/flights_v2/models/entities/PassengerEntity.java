@@ -19,12 +19,12 @@ public class PassengerEntity {
     private String passportno;
 
     @Size(max = 20)
-    @NotBlank(message = "Name cannot be blank")
+    @NotBlank(message = "Name cannot be empty")
     @Column(name = "firstname", nullable = false, length = 20)
     private String firstname;
 
     @Size(max = 20)
-    @NotBlank(message = "Last name cannot be blank")
+    @NotBlank(message = "Last name cannot be empty")
     @Column(name = "lastname", nullable = false, length = 20)
     private String lastname;
 

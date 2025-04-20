@@ -1,7 +1,5 @@
 package andres.flights_v2.dto;
 
-import andres.flights_v2.models.entities.FlightEntity;
-import andres.flights_v2.models.entities.PassengerEntity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,13 +9,10 @@ import java.time.LocalDate;
 
 public class TicketDTO {
     @Id
-    //@NotNull
     private Integer id;
 
-    //@NotNull
     private LocalDate dateOfBooking;
 
-    //@NotNull
     private LocalDate dateOfTravel;
 
     private LocalDate dateOfCancellation;
@@ -45,7 +40,7 @@ public class TicketDTO {
         this.price = price;
     }
 
-    // Getters y setters
+    // _getters / setters_
     public Integer getId() {
         return id;
     }

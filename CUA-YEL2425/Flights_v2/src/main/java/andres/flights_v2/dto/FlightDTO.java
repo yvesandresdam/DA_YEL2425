@@ -57,7 +57,7 @@ public class FlightDTO {
         this.seats = seats;
     }
 
-    // Getters y setters
+    // _getters / setters_
     public String getFlightCode() {
         return flightCode;
     }

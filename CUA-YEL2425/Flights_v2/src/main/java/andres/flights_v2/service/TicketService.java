@@ -20,27 +20,27 @@ public class TicketService {
         newTicket.setId(ticket.getId());
         newTicket.setDateOfBooking(LocalDate.now());
         newTicket.setDateOfTravel(ticket.getDateOfTravel());
-        newTicket.setDateOfCancellation(LocalDate.of(2050,12,12));
+        newTicket.setDateOfCancellation(null);
         newTicket.setFlightCode(ticketDAO.findFlightByFlightCode(ticket.getFlightCode()));
         newTicket.setPrice(150000);
 
-        // Validating passport exists
+        // Validating if passport exists
         PassengerEntity passenger = ticketDAO.findPassengerByPassportno(ticket.getPassportno());
-        if(passenger == null){
+        if (passenger == null)
             return false;
-        }
         newTicket.setPassportno(passenger);
 
         // Saving Ticket
-        try{
+        try {
             ticketDAO.save(newTicket);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return false;
     }
 
+    // GENERIC FUNCTIONS - SERVICE LAYER -
     public TicketEntity findTicketById(Integer ticketNumber) {
         return ticketDAO.getTicketEntityById(ticketNumber);
     }

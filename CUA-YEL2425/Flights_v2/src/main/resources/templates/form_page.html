@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Flight Form</title>
+    <title>Flight Ticket Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         * {
@@ -70,7 +70,7 @@
         <div class="form-group">
             <label for="flightDate">Date of Flight:</label>
             <input type="date" id="flightDate" name="flightDate" th:field="*{dateOfTravel}"
-            th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+            th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required/>
         </div>
 
         <!-- SOURCE -->
@@ -104,11 +104,11 @@
             <select id="flightCode" name="flightCode">
             </select>
         </div>
+
         <!-- BUTTON BUY TICKET -->
         <button type="submit" id="buyTicket">Buy Ticket</button>
     </form>
 </div>
-
 
 <script>
     const originSelect = document.getElementById('source');
@@ -117,18 +117,16 @@
 
     originSelect.addEventListener('change', function () {
         const originId = this.value;
-
         loadDestinationsForAirportWithCode(originId);
     });
 
     destinationSelect.addEventListener('click', function () {
         const originId = originSelect.value;
         const destinationId = destinationSelect.value;
-
         loadFlightCode(originId, destinationId);
     });
 
-    // DESTINATION RENDERING HTML
+    // DESTINATION RENDERING DESTINATIONS
     function loadDestinationsForAirportWithCode(originId) {
         fetch(`http://localhost:8080/flights_api/Web/Flights/Destinations/${originId}`)
             .then(response => response.json())
@@ -144,10 +142,9 @@
             .catch(error => {
                 console.error('Error fetching destinations:', error);
             });
-
     }
 
-    // FLIGHT_CODE RENDERING HTML
+    // FLIGHT_CODE RENDERING FLIGHTCODE
     function loadFlightCode(originId, destinationId) {
         fetch(`http://localhost:8080/flights_api/Web/Flights/${originId}/${destinationId}`)
             .then(response => response.json())
@@ -164,7 +161,6 @@
                 console.error('Error fetching flight codes:', error);
             });
     }
-
 </script>
 </body>
 

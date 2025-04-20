@@ -33,10 +33,9 @@ public class PassengerControllerWEB {
         return "new_passenger_page";
     }
 
-    @PostMapping("/NewPassenger/Create/TEST")
+    @PostMapping("/NewPassenger/Create")
     public String createNewPassenger(@Valid @ModelAttribute("passenger") PassengerDTO passengerDTO, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            System.out.println("Errores: " + result.getAllErrors());
             model.addAttribute("passenger", passengerDTO);
             return "new_passenger_page";
         }
@@ -62,17 +61,3 @@ public class PassengerControllerWEB {
     }
 }
 
-/*
-    @PostMapping("/NewPassenger/Create")
-    public String createNewPassenger(@Valid @ModelAttribute PassengerDTO passengerDTO, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return "new_passenger_page";
-//        }
-        try {
-            //passengerService.createPassenger(passengerDTO);
-            return "form_page";
-        } catch (IllegalArgumentException ex) {
-            return "error_page";
-        }
-    }
- */

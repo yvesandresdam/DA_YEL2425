@@ -10,15 +10,15 @@ public class PassengerDTO {
     @Id
     @Size(max = 9)
     @Pattern(regexp = "^[A-Za-z][0-9]{7}$", message = "Passport must start with a letter followed by 7 numbers")
-    @NotBlank(message = "Passport cannot be blank")
+    @NotBlank(message = "Passport cannot be empty")
     private String passportno;
 
     @Size(max = 20)
-    @NotBlank(message = "Name cannot be blank")
+    @NotBlank(message = "Name cannot be empty")
     private String firstname;
 
     @Size(max = 20)
-    @NotBlank(message = "Last name cannot be blank")
+    @NotBlank(message = "Last name cannot be empty")
     private String lastname;
 
     @Size(max = 100)
@@ -44,6 +44,7 @@ public class PassengerDTO {
         this.sex = sex;
     }
 
+    // _getters / setters_
     public String getPassportno() {
         return passportno;
     }
@@ -83,6 +84,7 @@ public class PassengerDTO {
     public void setAddress(String address) {
         this.address = address;
     }
+
     public void setPhone(String phone) {
         this.phone = phone;
     }
