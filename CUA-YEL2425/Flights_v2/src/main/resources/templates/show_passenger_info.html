@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Passenger Info</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .info {
+            margin-bottom: 1rem;
+        }
+
+        .info label {
+            font-weight: bold;
+        }
+
+        .info.button {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Passenger Information</h2>
+    <div class="info">
+        <label>First Name:</label>
+        <p th:text="${firstname}"></p>
+    </div>
+    <div class="info">
+        <label>Last Name:</label>
+        <p th:text="${lastname}"></p>
+    </div>
+    <div class="info">
+        <label>Passport:</label>
+        <p th:text="${passportno}"></p>
+    </div>
+    <div class="info">
+        <label>Address:</label>
+        <p th:text="${address}"></p>
+    </div>
+    <div class="info">
+        <label>Phone:</label>
+        <p th:text="${phone}"></p>
+    </div>
+    <div class="info">
+        <label>Sex:</label>
+        <p th:text="${sex}"></p>
+    </div>
+    <div class="info button">
+        <a href="http://localhost:8080/flights_api/Web/Flights/Origins">Back to tickets</a>
+    </div>
+</div>
+
+</body>
+
+</html>

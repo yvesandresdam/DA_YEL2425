@@ -9,8 +9,8 @@ public class PassengerDTO {
 
     @Id
     @Size(max = 9)
-    @Pattern(regexp = "^[A-Za-z][0-9]{8}$", message = "Passport must start with a letter followed by 8 numbers")
-    @NotBlank
+    @Pattern(regexp = "^[A-Za-z][0-9]{7}$", message = "Passport must start with a letter followed by 7 numbers")
+    @NotBlank(message = "Passport must start with a letter followed by 7 numbers")
     private String passportno;
 
     @Size(max = 20)
@@ -25,10 +25,11 @@ public class PassengerDTO {
     private String address;
 
     @Size(max = 12)
-    @Pattern(regexp = "\\+34\\d{9}", message = "Phone number must start with +34 and a 9 characters length")
+    @Pattern(regexp = "(^$)|(^\\+34\\d{9}$)", message = "Phone number must start with +34 and a 9 characters length")
     private String phone;
 
     @Size(max = 1)
+    @NotBlank(message = "Sex cannot be blank")
     @Pattern(regexp = "^[MF]$", message = "Sex must be 'M' or 'F'")
     private String sex;
 

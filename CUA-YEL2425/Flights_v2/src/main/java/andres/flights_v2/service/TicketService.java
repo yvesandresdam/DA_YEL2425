@@ -2,7 +2,6 @@ package andres.flights_v2.service;
 
 import andres.flights_v2.dto.TicketDTO;
 import andres.flights_v2.models.dao.ITicketEntityDAO;
-import andres.flights_v2.models.entities.FlightEntity;
 import andres.flights_v2.models.entities.PassengerEntity;
 import andres.flights_v2.models.entities.TicketEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +15,23 @@ public class TicketService {
     private ITicketEntityDAO ticketDAO;
 
     public boolean createTicket(TicketDTO ticket) {
+        // Create New Ticket
         TicketEntity newTicket = new TicketEntity();
         newTicket.setId(ticket.getId());
-        newTicket.setDateOfBooking(ticket.getDateOfBooking());
+        newTicket.setDateOfBooking(LocalDate.now());
         newTicket.setDateOfTravel(ticket.getDateOfTravel());
-        newTicket.setDateOfCancellation(ticket.getDateOfCancellation());
-        newTicket.setPassportno(ticket.getPassportno());
-        newTicket.setFlightCode(ticket.getFlightCode());
-        newTicket.setPrice(ticket.getPrice());
+        newTicket.setDateOfCancellation(LocalDate.of(2050,12,12));
+        newTicket.setFlightCode(ticketDAO.findFlightByFlightCode(ticket.getFlightCode()));
+        newTicket.setPrice(150000);
 
+        // Validating passport exists
+        PassengerEntity passenger = ticketDAO.findPassengerByPassportno(ticket.getPassportno());
+        if(passenger == null){
+            return false;
+        }
+        newTicket.setPassportno(passenger);
+
+        // Saving Ticket
         try{
             ticketDAO.save(newTicket);
             return true;

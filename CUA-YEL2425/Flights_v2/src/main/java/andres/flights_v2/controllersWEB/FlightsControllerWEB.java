@@ -1,6 +1,7 @@
 package andres.flights_v2.controllersWEB;
 
 
+import andres.flights_v2.dto.TicketDTO;
 import andres.flights_v2.models.entities.AirportEntity;
 import andres.flights_v2.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class FlightsControllerWEB {
     public String WebShowOrigins(Model model) {
         List<AirportEntity> origins = flightService.findAllOrigins();
         model.addAttribute("origins", origins);
+        model.addAttribute("ticketDTO", new TicketDTO());
         return "form_page";
     }
 

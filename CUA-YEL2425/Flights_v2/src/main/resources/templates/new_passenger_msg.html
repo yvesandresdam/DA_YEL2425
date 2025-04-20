@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ticket Created</title>
+    <title>New Passenger...</title>
     <style>
         body {
             margin: 0;
@@ -12,6 +12,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            font-family: Arial, sans-serif;
         }
 
         .card {
@@ -20,6 +21,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
+            width: 500px;
         }
 
         .card h1 {
@@ -41,8 +43,8 @@
 </head>
 <body>
 <div class="card">
-    <h1>There was an Error!</h1>
-    <a href="http://localhost:8080/flights_api/Web/Flights/Origins">Back to Ticket Purchasing</a>
+    <h1>The current passport does not exists in our database</h1>
+    <a href="http://localhost:8080/flights_api/Web/Passenger/NewPassenger">Create new user</a>
 </div>
 </body>
 </html>

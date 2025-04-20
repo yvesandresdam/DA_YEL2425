@@ -6,11 +6,23 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-@NamedNativeQuery(
-        name = "TicketEntity.checkTicketExists",
-        query = "SELECT yveeli_03_ticket_already_exists(:travelDate, :passportNo)",
-        resultClass = Boolean.class
-)
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "TicketEntity.checkTicketExists",
+                query = "SELECT yveeli_03_ticket_already_exists(:travelDate, :passportNo)",
+                resultClass = Boolean.class
+        ),
+        @NamedNativeQuery(
+                name = "TicketEntity.findPassengerByPassportno",
+                query = "SELECT * FROM passengers WHERE passportno = :passportno",
+                resultClass = PassengerEntity.class
+        ),
+        @NamedNativeQuery(
+                name = "TicketEntity.findFlightByFlightCode",
+                query = "SELECT * FROM flights WHERE flight_code = :flightCode",
+                resultClass = FlightEntity.class
+        )
+})
 
 @Entity
 @Table(name = "tickets")
@@ -21,23 +33,23 @@ public class TicketEntity {
     @Column(name = "ticket_number", nullable = false)
     private Integer id;
 
-    @NotBlank
+    @NotNull
     @Column(name = "date_of_booking", nullable = false)
     private LocalDate dateOfBooking;
 
-    @NotBlank
+    @NotNull
     @Column(name = "date_of_travel", nullable = false)
     private LocalDate dateOfTravel;
 
     @Column(name = "date_of_cancellation")
     private LocalDate dateOfCancellation;
 
-    @NotBlank
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "passportno", nullable = false)
     private PassengerEntity passportno;
 
-    @NotBlank
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "flight_code", nullable = false)
     private FlightEntity flightCode;

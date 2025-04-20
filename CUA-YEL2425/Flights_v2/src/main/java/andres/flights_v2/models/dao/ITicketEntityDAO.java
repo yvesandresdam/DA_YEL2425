@@ -1,5 +1,7 @@
 package andres.flights_v2.models.dao;
 
+import andres.flights_v2.models.entities.FlightEntity;
+import andres.flights_v2.models.entities.PassengerEntity;
 import andres.flights_v2.models.entities.TicketEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,4 +18,7 @@ public interface ITicketEntityDAO extends CrudRepository<TicketEntity, Integer> 
     // Function that check if user has bought a ticket already
     Boolean checkTicketExists(@Param("travelDate") LocalDate travelDate,
                               @Param("passportNo") String passportNo);
+
+    PassengerEntity findPassengerByPassportno(String passportno);
+    FlightEntity findFlightByFlightCode(String flightCode);
 }
