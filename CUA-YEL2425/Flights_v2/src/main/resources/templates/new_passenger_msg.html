@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>New Passenger...</title>
@@ -44,7 +44,7 @@
 <body>
 <div class="card">
     <h1>The current passport does not exists in our database</h1>
-    <a href="http://localhost:8080/flights_api/Web/Passenger/NewPassenger">Create new user</a>
+    <a th:href="@{/Web/Passenger/NewPassenger(passportno=${passportno})}">Create new user</a>
 </div>
 </body>
 </html>

@@ -5,6 +5,7 @@ import andres.flights_v2.service.TicketService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +17,15 @@ public class TicketsControllerWEB {
     private TicketService ticketService;
 
     @PostMapping("/CreateTicket")
-    public String createNewTicket(@Valid @ModelAttribute TicketDTO ticketDTO) {
+    public String createNewTicket(@Valid @ModelAttribute TicketDTO ticketDTO, Model model) {
         try {
             boolean success = ticketService.createTicket(ticketDTO);
-            if (success)
+            if (success) {
                 return "success_page";
-            else return "new_passenger_msg";
+            } else {
+                model.addAttribute("passportno", ticketDTO.getPassportno());
+                return "new_passenger_msg";
+            }
         } catch (IllegalArgumentException ex) {
             return "error_page";
         }

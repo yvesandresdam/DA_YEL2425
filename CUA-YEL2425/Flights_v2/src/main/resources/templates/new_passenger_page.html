@@ -7,17 +7,12 @@
     <title>Create New User</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f6fa;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
 
         .form-container {
@@ -95,15 +90,16 @@
         <!-- ALERTAS -->
         <!-- Este metodo para mostrar alertas no me disgustaba.
              Lo dejo comentado para acordarme de implementarlo en el futuro
-             -->
+        -->
+        <!--
         <div th:if="${#fields.hasErrors('sex')}" class="alert">
             <p th:errors="*{sex}">Sex must be 'M' or 'F'</p>
         </div>
-
+        -->
 
         <div class="form-group">
             <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" th:field="*{firstname}" required>
+            <input type="text" id="firstname" th:field="*{firstname}">
             <div th:if="${#fields.hasErrors('firstname')}" class="error-message">
                 <p th:errors="*{firstname}">First name is required</p>
             </div>
@@ -111,7 +107,7 @@
 
         <div class="form-group">
             <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" th:field="*{lastname}" required>
+            <input type="text" id="lastname" th:field="*{lastname}">
             <div th:if="${#fields.hasErrors('lastname')}" class="error-message">
                 <p th:errors="*{lastname}">Last name is required</p>
             </div>
@@ -119,7 +115,7 @@
 
         <div class="form-group">
             <label for="passportno">Passport:</label>
-            <input type="text" id="passportno" th:field="*{passportno}" required>
+            <input type="text" id="passportno" th:field="*{passportno}">
             <div th:if="${#fields.hasErrors('passportno')}" class="error-message">
                 <p th:errors="*{passportno}">Passport must begin with letter</p>
             </div>
@@ -140,8 +136,8 @@
 
         <div class="form-group">
             <label for="sex">Sex:</label>
-            <input type="text" id="sex" th:field="*{sex}" required>
-            <div th:if="${#fields.hasErrors('sex')}" style="color:red">
+            <input type="text" id="sex" th:field="*{sex}">
+            <div th:if="${#fields.hasErrors('sex')}" class="error-message">
                 <p th:errors="*{sex}">Sex must be 'M' or 'F'</p>
             </div>
         </div>

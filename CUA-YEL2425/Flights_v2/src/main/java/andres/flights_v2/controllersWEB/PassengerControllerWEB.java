@@ -24,8 +24,12 @@ public class PassengerControllerWEB {
     private IPassengerEntityDAO DAO;
 
     @GetMapping("/NewPassenger")
-    public String showNewPassengerForm(Model model) {
-        model.addAttribute("passenger", new PassengerDTO());
+    public String showNewPassengerForm(@RequestParam(name = "passportno", required = false) String passportno, Model model) {
+        PassengerDTO passenger = new PassengerDTO();
+        if (passportno != null) {
+            passenger.setPassportno(passportno);
+        }
+        model.addAttribute("passenger", passenger);
         return "new_passenger_page";
     }
 

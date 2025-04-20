@@ -10,15 +10,15 @@ public class PassengerDTO {
     @Id
     @Size(max = 9)
     @Pattern(regexp = "^[A-Za-z][0-9]{7}$", message = "Passport must start with a letter followed by 7 numbers")
-    @NotBlank(message = "Passport must start with a letter followed by 7 numbers")
+    @NotBlank(message = "Passport cannot be blank")
     private String passportno;
 
     @Size(max = 20)
-    @NotBlank
+    @NotBlank(message = "Name cannot be blank")
     private String firstname;
 
     @Size(max = 20)
-    @NotBlank
+    @NotBlank(message = "Last name cannot be blank")
     private String lastname;
 
     @Size(max = 100)
