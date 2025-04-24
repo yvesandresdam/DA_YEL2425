@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="andres.flights_v31.FlightController"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+          alignment="CENTER" spacing="10">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <ComboBox fx:id="cityComboBox" prefWidth="200">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Madrid"/>
+                    <String fx:value="Barcelona"/>
+                    <String fx:value="Valencia"/>
+                    <String fx:value="Sevilla"/>
+                    <String fx:value="Bilbao"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+    </VBox>
+</AnchorPane>
