@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="andres.flights_mix.controller.AirportController">
-    <Text text="Seleccione un aeropuerto" />
-    <ComboBox fx:id="airportComboBox" prefWidth="300" />
-</VBox>

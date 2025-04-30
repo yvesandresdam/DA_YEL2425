@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.layout.VBox?>
-
-<VBox spacing="20.0" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="andres.flights_mix.AirportController">
-    <ComboBox fx:id="airportComboBox" prefWidth="250"/>
-</VBox>
