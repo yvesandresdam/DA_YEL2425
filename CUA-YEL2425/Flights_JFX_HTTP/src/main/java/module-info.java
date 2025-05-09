@@ -3,6 +3,10 @@ module andres.flights_jfxtemplate {
     requires javafx.fxml;
     requires java.net.http;
     requires org.json;
+    requires com.fasterxml.jackson.datatype.jsr310;
+    requires com.fasterxml.jackson.databind;
+    requires jakarta.persistence;
+    requires jakarta.validation;
 
 
     opens andres.flights_jfxtemplate to javafx.fxml;
@@ -13,4 +17,5 @@ module andres.flights_jfxtemplate {
     opens andres.flights_jfxtemplate.Service to javafx.fxml;
     exports andres.flights_jfxtemplate.Controller;
     opens andres.flights_jfxtemplate.Controller to javafx.fxml;
+    exports andres.flights_jfxtemplate.DTO to com.fasterxml.jackson.databind;
 }

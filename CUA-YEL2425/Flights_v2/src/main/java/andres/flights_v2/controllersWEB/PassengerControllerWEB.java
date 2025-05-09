@@ -6,14 +6,10 @@ import andres.flights_v2.models.entities.PassengerEntity;
 import andres.flights_v2.service.PassengerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @Controller
 @RequestMapping("/Web/Passenger")
@@ -30,14 +26,14 @@ public class PassengerControllerWEB {
             passenger.setPassportno(passportno);
         }
         model.addAttribute("passenger", passenger);
-        return "new_passenger_page";
+        return "form_new_passenger";
     }
 
     @PostMapping("/NewPassenger/Create")
     public String createNewPassenger(@Valid @ModelAttribute("passenger") PassengerDTO passengerDTO, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("passenger", passengerDTO);
-            return "new_passenger_page";
+            return "form_new_passenger";
         }
 
         model.addAttribute("firstname", passengerDTO.getFirstname());
@@ -57,7 +53,7 @@ public class PassengerControllerWEB {
 
         DAO.save(passenger);
 
-        return "show_passenger_info";
+        return "msg_passenger_info";
     }
 }
 

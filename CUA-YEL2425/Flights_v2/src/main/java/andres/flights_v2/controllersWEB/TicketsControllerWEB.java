@@ -28,7 +28,7 @@ public class TicketsControllerWEB {
         List<AirportEntity> origins = flightService.findAllOrigins();
         model.addAttribute("origins", origins);
         model.addAttribute("ticketDTO", new TicketDTO());
-        return "form_page";
+        return "form_buy_ticket";
     }
 
     @PostMapping("/CreateTicket")
@@ -36,13 +36,13 @@ public class TicketsControllerWEB {
         try {
             boolean success = ticketService.createTicket(ticketDTO);
             if (success) {
-                return "success_page";
+                return "msg_ticket_success";
             } else {
                 model.addAttribute("passportno", ticketDTO.getPassportno());
-                return "new_passenger_msg";
+                return "navigate_to_new_passenger";
             }
         } catch (IllegalArgumentException ex) {
-            return "error_page";
+            return ex.getMessage();
         }
     }
 }

@@ -46,7 +46,8 @@ public class TicketEntity {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "passportno", nullable = false)
-    private PassengerEntity passportno;
+    //private PassengerEntity passportno;
+    private PassengerEntity passenger;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -89,11 +90,11 @@ public class TicketEntity {
     }
 
     public PassengerEntity getPassportno() {
-        return passportno;
+        return passenger;
     }
 
     public void setPassportno(PassengerEntity passportno) {
-        this.passportno = passportno;
+        this.passenger = passportno;
     }
 
     public FlightEntity getFlightCode() {

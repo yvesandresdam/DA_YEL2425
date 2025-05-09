@@ -15,20 +15,28 @@ public class TicketService {
     private ITicketEntityDAO ticketDAO;
 
     public boolean createTicket(TicketDTO ticket) {
-        // Create New Ticket
+        // TicketDTO -> TicketEntity
         TicketEntity newTicket = new TicketEntity();
-        newTicket.setId(ticket.getId());
-        newTicket.setDateOfBooking(LocalDate.now());
-        newTicket.setDateOfTravel(ticket.getDateOfTravel());
-        newTicket.setDateOfCancellation(null);
-        newTicket.setFlightCode(ticketDAO.findFlightByFlightCode(ticket.getFlightCode()));
-        newTicket.setPrice(150000);
 
-        // Validating if passport exists
-        PassengerEntity passenger = ticketDAO.findPassengerByPassportno(ticket.getPassportno());
+        // ID
+        newTicket.setId(ticket.getId());
+
+        // Booking Today date
+        newTicket.setDateOfBooking(LocalDate.now());
+        // Booking travel date
+        newTicket.setDateOfTravel(ticket.getDateOfTravel());
+
+        // Flight Entity with flight_code
+        String flightCode = ticket.getFlightCode();
+        newTicket.setFlightCode(ticketDAO.findFlightByFlightCode(flightCode));
+
+        // Passenger passport
+        String passengerPassport = ticket.getPassportno();
+        PassengerEntity passenger = ticketDAO.findPassengerByPassportno(passengerPassport);
+        newTicket.setPassportno(passenger);
+
         if (passenger == null)
             return false;
-        newTicket.setPassportno(passenger);
 
         // Saving Ticket
         try {

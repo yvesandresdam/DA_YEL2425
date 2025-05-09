@@ -16,9 +16,9 @@
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <ComboBox maxWidth="70.0" minWidth="70.0" prefWidth="70.0" promptText="Day" />
-                  <ComboBox maxWidth="80.0" minWidth="80.0" prefWidth="80.0" promptText="Month" />
-                  <ComboBox maxWidth="70.0" minWidth="70.0" prefWidth="70.0" promptText="Year" />
+                  <ComboBox fx:id="dayCombo" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" promptText="Day" />
+                  <ComboBox fx:id="monthCombo" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" promptText="Month" />
+                  <ComboBox fx:id="yearCombo" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" promptText="Year" />
                </children>
                <VBox.margin>
                   <Insets top="20.0" />
@@ -29,20 +29,20 @@
                   <Insets />
                </VBox.margin>
             </ComboBox>
-            <ComboBox  prefWidth="240.0" promptText="Select a destination" />
+            <ComboBox fx:id="destinationCombo" prefWidth="240.0" promptText="Select a destination" />
             <HBox alignment="TOP_CENTER" prefWidth="260.0" spacing="10.0">
                <children>
-                  <ComboBox prefWidth="180.0" promptText="Select a Flight" />
-                  <ComboBox prefWidth="30.0" />
+                  <ComboBox fx:id="flightCombo" prefWidth="170.0" promptText="Select a Flight" />
+                  <ComboBox fx:id="typeFlightCombo" minWidth="50.0" />
                </children>
             </HBox>
             <HBox alignment="TOP_CENTER" prefWidth="260.0" spacing="10.0">
                <children>
-                  <TextField prefWidth="180.0" promptText="Insert your passport" />
-                  <Button mnemonicParsing="false" text="Button" />
+                  <TextField fx:id="passportField" prefWidth="170.0" promptText="Insert your passport" />
+                  <Button fx:id="newUserButton" mnemonicParsing="false" text="Create" minWidth="60.0" onAction="#createNewUser"/>
                </children>
             </HBox>
-            <Button minWidth="240.0" mnemonicParsing="false" text="Buy Ticket" />
+            <Button fx:id="newTicketButton" minWidth="240.0" mnemonicParsing="false" text="Buy Ticket" onAction="#createNewTicket"/>
          </children>
          <padding>
             <Insets top="50.0" />

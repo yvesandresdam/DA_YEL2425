@@ -25,7 +25,7 @@ public class FlightsControllerWEB {
         List<AirportEntity> origins = flightService.findAllOrigins();
         model.addAttribute("origins", origins);
         model.addAttribute("ticketDTO", new TicketDTO());
-        return "form_page";
+        return "form_buy_ticket";
     }
 
     @GetMapping("/Destinations/{originId}")

@@ -1,8 +1,9 @@
-package andres.flights_v2.dto;
+package andres.flights_jfxtemplate.DTO;
+
+
 
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
@@ -10,8 +11,12 @@ import java.time.LocalDate;
 public class TicketDTO {
     @Id
     private Integer id;
+
     private LocalDate dateOfBooking;
+
     private LocalDate dateOfTravel;
+
+    private LocalDate dateOfCancellation;
 
     @NotBlank
     @Size(max = 10)
@@ -21,15 +26,19 @@ public class TicketDTO {
     @Size(max = 10)
     private String flightCode;
 
+    private Integer price;
+
     public TicketDTO() {
     }
 
-    public TicketDTO(Integer id, LocalDate dateOfBooking, LocalDate dateOfTravel, String passportno, String flightCode) {
+    public TicketDTO(Integer id, LocalDate dateOfBooking, LocalDate dateOfTravel, LocalDate dateOfCancellation, String passportno, String flightCode, Integer price) {
         this.id = id;
         this.dateOfBooking = dateOfBooking;
         this.dateOfTravel = dateOfTravel;
+        this.dateOfCancellation = dateOfCancellation;
         this.passportno = passportno;
         this.flightCode = flightCode;
+        this.price = price;
     }
 
     // _getters / setters_
@@ -57,6 +66,14 @@ public class TicketDTO {
         this.dateOfTravel = dateOfTravel;
     }
 
+    public LocalDate getDateOfCancellation() {
+        return dateOfCancellation;
+    }
+
+    public void setDateOfCancellation(LocalDate dateOfCancellation) {
+        this.dateOfCancellation = dateOfCancellation;
+    }
+
     public String getPassportno() {
         return passportno;
     }
@@ -71,6 +88,14 @@ public class TicketDTO {
 
     public void setFlightCode(String flightCode) {
         this.flightCode = flightCode;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 }
 
