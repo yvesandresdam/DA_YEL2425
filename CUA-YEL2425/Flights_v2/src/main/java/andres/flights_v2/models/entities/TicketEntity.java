@@ -46,7 +46,6 @@ public class TicketEntity {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "passportno", nullable = false)
-    //private PassengerEntity passportno;
     private PassengerEntity passenger;
 
     @NotNull

@@ -20,6 +20,7 @@ public class FlightsControllerWEB {
     @Autowired
     private FlightService flightService;
 
+    // Endpoint:
     @GetMapping("/Origins")
     public String WebShowOrigins(Model model) {
         List<AirportEntity> origins = flightService.findAllOrigins();

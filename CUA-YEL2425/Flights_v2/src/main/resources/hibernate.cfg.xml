@@ -12,8 +12,5 @@
     <mapping class="andres.flights_v2.models.entities.PassengerEntity"/>
     <mapping class="andres.flights_v2.models.entities.FlightEntity"/>
     <mapping class="andres.flights_v2.models.entities.TicketEntity"/>
-
-    <!-- DB schema will be updated if needed -->
-    <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>
 </hibernate-configuration>

@@ -1,4 +1,4 @@
-package andres.flights_jfxtemplate.Controller;
+package andres.flights_jfxtemplate.Bridges;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,11 +8,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class TransitionController {
+public class Ticket_in_Passenger {
     @FXML
     Button buttonNextScreen;
     public void loadNextScreen() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/andres/flights_jfxtemplate/passenger-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/andres/flights_jfxtemplate/view-passenger-form.fxml"));
         Scene scene = new Scene(loader.load());
 
         Stage stage = (Stage) buttonNextScreen.getScene().getWindow();
@@ -21,7 +21,7 @@ public class TransitionController {
     }
 
     public void loadTicketScreen() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/andres/flights_jfxtemplate/ticket-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/andres/flights_jfxtemplate/view-ticket-form.fxml"));
         Scene scene = new Scene(loader.load());
 
         Stage stage = (Stage) buttonNextScreen.getScene().getWindow();

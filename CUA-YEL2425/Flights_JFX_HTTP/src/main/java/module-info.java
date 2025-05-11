@@ -18,4 +18,6 @@ module andres.flights_jfxtemplate {
     exports andres.flights_jfxtemplate.Controller;
     opens andres.flights_jfxtemplate.Controller to javafx.fxml;
     exports andres.flights_jfxtemplate.DTO to com.fasterxml.jackson.databind;
+    exports andres.flights_jfxtemplate.Bridges;
+    opens andres.flights_jfxtemplate.Bridges to javafx.fxml;
 }

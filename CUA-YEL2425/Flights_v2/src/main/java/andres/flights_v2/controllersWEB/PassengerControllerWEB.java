@@ -17,7 +17,7 @@ public class PassengerControllerWEB {
     @Autowired
     private PassengerService passengerService;
     @Autowired
-    private IPassengerEntityDAO DAO;
+    private IPassengerEntityDAO passengerDAO;
 
     @GetMapping("/NewPassenger")
     public String showNewPassengerForm(@RequestParam(name = "passportno", required = false) String passportno, Model model) {
@@ -51,9 +51,7 @@ public class PassengerControllerWEB {
         passenger.setPhone(passengerDTO.getPhone());
         passenger.setSex(passengerDTO.getSex());
 
-        DAO.save(passenger);
-
+        passengerDAO.save(passenger);
         return "msg_passenger_info";
     }
 }
-

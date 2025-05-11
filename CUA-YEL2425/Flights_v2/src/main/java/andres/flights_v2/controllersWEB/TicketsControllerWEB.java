@@ -23,6 +23,7 @@ public class TicketsControllerWEB {
     @Autowired
     private FlightService flightService;
 
+    // Endpoint: Devuelve la pagina de formulario para comprar un ticket
     @GetMapping("/CreateTicket")
     public String showCreateTicketForm(Model model) {
         List<AirportEntity> origins = flightService.findAllOrigins();
@@ -31,6 +32,8 @@ public class TicketsControllerWEB {
         return "form_buy_ticket";
     }
 
+    // Endpoint: POST, requiere un objeto TicketDTO para crear un ticket nuevo
+    // Te lleva a la pagina de confirmacion de compra
     @PostMapping("/CreateTicket")
     public String createNewTicket(@Valid @ModelAttribute TicketDTO ticketDTO, Model model) {
         try {

@@ -4,6 +4,7 @@ import andres.flights_jfxtemplate.DTO.TicketDTO;
 import andres.flights_jfxtemplate.Entity.AirportEntity;
 import andres.flights_jfxtemplate.Entity.FlightEntity;
 import andres.flights_jfxtemplate.Service.FlightService;
+import andres.flights_jfxtemplate.Service.TicketService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.event.ActionEvent;
@@ -12,10 +13,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,8 +26,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class TicketsController {
-
-
     @FXML
     private ComboBox<Integer> dayCombo;
     @FXML
@@ -45,10 +42,9 @@ public class TicketsController {
     private ComboBox<String> typeFlightCombo;
     @FXML
     private TextField passportField;
-    @FXML
-    private Button buttonCreationPassenger;
 
     private FlightService flightService = new FlightService();
+    private TicketService ticketService = new TicketService();
 
     @FXML
     public void initialize() {
@@ -60,26 +56,20 @@ public class TicketsController {
         listenerTypeFlights();
     }
 
-    private void loadDate(){
-        for(int i = 1; i <= 31; i++) {
+    private void loadDate() {
+        for (int i = 1; i <= 31; i++) {
             dayCombo.getItems().add(i);
         }
-        for(int i = 1; i <= 12; i++) {
+        for (int i = 1; i <= 12; i++) {
             monthCombo.getItems().add(i);
         }
-        for(int i = 2025; i <= 2030; i++) {
+        for (int i = 2025; i <= 2030; i++) {
             yearCombo.getItems().add(i);
         }
     }
 
     private void loadOrigins() {
         originCombo.getItems().addAll(flightService.getAllOrigins());
-    }
-
-    private void loadTypeFlight(){
-        typeFlightCombo.getItems().add("♪");
-        typeFlightCombo.getItems().add("⏱");
-        typeFlightCombo.getItems().add("✈");
     }
 
     public void listenerOrigins() {
@@ -105,6 +95,12 @@ public class TicketsController {
         });
     }
 
+    private void loadTypeFlight() {
+        typeFlightCombo.getItems().add("♪");
+        typeFlightCombo.getItems().add("⏱");
+        typeFlightCombo.getItems().add("✈");
+    }
+
     public void listenerTypeFlights() {
         typeFlightCombo.setOnAction(event -> {
             int selectedIndex = typeFlightCombo.getSelectionModel().getSelectedIndex();
@@ -114,9 +110,9 @@ public class TicketsController {
         });
     }
 
-    public void createNewUser(ActionEvent event){
+    public void createNewUser(ActionEvent event) {
         try {
-            Parent nuevaVista = FXMLLoader.load(getClass().getResource("/andres/flights_jfxtemplate/navigation-passenger-creation.fxml"));
+            Parent nuevaVista = FXMLLoader.load(getClass().getResource("/andres/flights_jfxtemplate/nvg-passenger-creation.fxml"));
             Scene nuevaEscena = new Scene(nuevaVista);
 
             Node source = (Node) event.getSource();
@@ -129,32 +125,36 @@ public class TicketsController {
         }
     }
 
-    public void createNewTicket(ActionEvent event){
-        try {
-            Integer day = dayCombo.getValue();
-            Integer month = monthCombo.getValue();
-            Integer year = yearCombo.getValue();
-            FlightEntity flight = flightCombo.getValue();
-            String type = typeFlightCombo.getValue();
-            String passport = passportField.getText();
+    public void createNewTicket(ActionEvent event) {
+        Integer day = dayCombo.getValue();
+        Integer month = monthCombo.getValue();
+        Integer year = yearCombo.getValue();
+        FlightEntity flight = flightCombo.getValue();
+        String type = typeFlightCombo.getValue();
+        String passport = passportField.getText();
 
-            if (day == null || month == null || year == null || flight == null || type == null || passport == null || passport.isEmpty()) {
-                System.out.println("Faltan datos del formulario.");
-                return;
-            }
+        if (day == null || month == null || year == null || flight == null || type == null || passport == null || passport.isEmpty()) {
+            System.out.println("Faltan datos del formulario.");
+            return;
+        }
 
-            TicketDTO ticket = new TicketDTO();
-            ticket.setDateOfTravel(LocalDate.of(year,month,day));
-            ticket.setFlightCode(flight.getFlightCode());
-            ticket.setPassportno(passport);
+        TicketDTO ticket = new TicketDTO();
+        ticket.setDateOfTravel(LocalDate.of(year, month, day));
+        ticket.setFlightCode(flight.getFlightCode());
+        ticket.setPassportno(passport);
 
+        ticketService.createNewTicket(event, ticket);
+    }
+}
+
+/*
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             String json = mapper.writeValueAsString(ticket);
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/flights_api/Tickets/createTicket"))
+                    .uri(URI.create("http://localhost:8080/flights_api/Tickets/CreateTicket"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(json))
                     .build();
@@ -163,7 +163,7 @@ public class TicketsController {
             String responseBody = response.body().trim();
 
             if ("true".equals(response.body())) {
-                Parent nuevaVista = FXMLLoader.load(getClass().getResource("/andres/flights_jfxtemplate/success-ticket-page.fxml"));
+                Parent nuevaVista = FXMLLoader.load(getClass().getResource("/andres/flights_jfxtemplate/msg_ticket_success.fxml"));
                 Scene nuevaEscena = new Scene(nuevaVista);
 
                 Node source = (Node) event.getSource();
@@ -180,5 +180,5 @@ public class TicketsController {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-    }
-}
+
+             */

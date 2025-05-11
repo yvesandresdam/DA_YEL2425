@@ -10,7 +10,7 @@
       spacing="20.0"
       prefWidth="400.0"
       prefHeight="300.0"
-      fx:controller="andres.flights_jfxtemplate.Controller.TransitionController">
+      fx:controller="andres.flights_jfxtemplate.Bridges.Ticket_in_Passenger">
 
     <children>
         <Label text="Pasajero creado correctamente" style="-fx-font-size: 18px;"/>

@@ -1,4 +1,6 @@
 package andres.flights_jfxtemplate.Controller;
+
+import andres.flights_jfxtemplate.Service.PassengerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,9 +11,9 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.OutputStream;
+
 import andres.flights_jfxtemplate.DTO.PassengerDTO;
 import javafx.stage.Stage;
-import org.json.JSONObject;
 
 public class PassengerController {
     @FXML
@@ -29,6 +31,8 @@ public class PassengerController {
     @FXML
     private Button buttonNewUser;
 
+    private PassengerService passengerService = new PassengerService();
+
     @FXML
     public void initialize() {
         genderCombo.getItems().addAll("M", "F");
@@ -36,16 +40,37 @@ public class PassengerController {
 
     @FXML
     private void createNewUser() {
-        try {
-            PassengerDTO passenger = new PassengerDTO();
-            passenger.setFirstname(nameField.getText());
-            passenger.setLastname(lastNameField.getText());
-            passenger.setPassportno(passportField.getText());
-            passenger.setAddress(addressField.getText());
-            passenger.setPhone(phoneField.getText());
-            passenger.setSex(genderCombo.getValue());
+        PassengerDTO passenger = new PassengerDTO();
+        passenger.setFirstname(nameField.getText());
+        passenger.setLastname(lastNameField.getText());
+        passenger.setPassportno(passportField.getText());
+        passenger.setAddress(addressField.getText());
+        passenger.setPhone(phoneField.getText());
+        passenger.setSex(genderCombo.getValue());
 
-            ObjectMapper objectMapper = new ObjectMapper();
+        passengerService.createNewPassenger(passenger);
+
+        buttonCreateNewPassengerAction();
+    }
+
+    @FXML
+    private void buttonCreateNewPassengerAction() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/andres/flights_jfxtemplate/msg-passenger-success.fxml"));
+            Scene newScene = new Scene(loader.load());
+
+            Stage stage = (Stage) buttonNewUser.getScene().getWindow();
+
+            stage.setScene(newScene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+/*
+    ObjectMapper objectMapper = new ObjectMapper();
             String json = objectMapper.writeValueAsString(passenger);
 
             URL url = new URL("http://localhost:8080/flights_api/Passenger/CreateNewPassenger");
@@ -71,22 +96,4 @@ public class PassengerController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        buttonCreateNewPassengerAction();
-    }
-
-    @FXML
-    private void buttonCreateNewPassengerAction() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/andres/flights_jfxtemplate/success-page.fxml"));
-            Scene newScene = new Scene(loader.load());
-
-            Stage stage = (Stage) buttonNewUser.getScene().getWindow();
-
-            stage.setScene(newScene);
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-}
+ */

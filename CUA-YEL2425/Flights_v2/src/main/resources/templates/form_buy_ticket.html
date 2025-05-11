@@ -6,61 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Flight Ticket Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f6fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .form-container {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 350px;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        select,
-        input[type="text"] {
-            width: 300px;
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-
-        button {
-            width: 300px;
-            padding: 0.5rem;
-            border: none;
-            border-radius: 8px;
-            background-color: #3498db;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #2980b9;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 
 <body>
@@ -77,6 +23,7 @@
         <div class="form-group">
             <label for="source">Source:</label>
             <select id="source" name="source">
+                <option value="">Select an origin</option>
                 <option th:each="airport : ${origins}"
                         th:value="${airport.code}"
                         th:text="${airport.code} + ' - ' + ${airport.name}">
@@ -102,6 +49,7 @@
         <div class="form-group">
             <label for="flightCode">Flight:</label>
             <select id="flightCode" name="flightCode">
+                <option value="">Select a flight</option>
             </select>
         </div>
 

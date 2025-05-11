@@ -9,11 +9,12 @@
       alignment="CENTER"
       spacing="20.0"
       prefWidth="400.0"
-      prefHeight="300.0">
+      prefHeight="300.0"
+      fx:controller="andres.flights_jfxtemplate.Bridges.Ticket_in_Passenger">
 
     <children>
-        <Label text="Error en el proceso de creacion" style="-fx-font-size: 18px;"/>
-        <Button text="Volver a Tickets" fx:id="buttonErrorBackTickets"/>
+        <Label text="Ticket creado correctamente" style="-fx-font-size: 18px;"/>
+        <Button text="Volver a Tickets" fx:id="buttonNextScreen" onAction="#loadTicketScreen"/>
     </children>
 
 </VBox>
