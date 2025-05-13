@@ -11,7 +11,6 @@ public class PassengerDTO {
     private String phone;
     private String sex;
 
-    // Constructor vacío (requerido para Jackson)
     public PassengerDTO() {
     }
 

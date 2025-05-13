@@ -31,8 +31,8 @@ public class TicketService {
         newTicket.setFlightCode(ticketDAO.findFlightByFlightCode(flightCode));
 
         // Passenger passport
-        String passengerPassport = ticket.getPassportno();
-        PassengerEntity passenger = ticketDAO.findPassengerByPassportno(passengerPassport);
+        String passportno = ticket.getPassportno();
+        PassengerEntity passenger = ticketDAO.findPassengerByPassportno(passportno);
         newTicket.setPassportno(passenger);
 
         if (passenger == null)

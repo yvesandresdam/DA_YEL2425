@@ -19,6 +19,7 @@ public class PassengerControllerWEB {
     @Autowired
     private IPassengerEntityDAO passengerDAO;
 
+    // Endpoint: Te lleva a la pantalla de creacion de usuario nuevo
     @GetMapping("/NewPassenger")
     public String showNewPassengerForm(@RequestParam(name = "passportno", required = false) String passportno, Model model) {
         PassengerDTO passenger = new PassengerDTO();
@@ -29,6 +30,7 @@ public class PassengerControllerWEB {
         return "form_new_passenger";
     }
 
+    // Endpoint: POST, le pasas un objeto passenger DTO para crear un usuario nuevo
     @PostMapping("/NewPassenger/Create")
     public String createNewPassenger(@Valid @ModelAttribute("passenger") PassengerDTO passengerDTO, BindingResult result, Model model) {
         if (result.hasErrors()) {

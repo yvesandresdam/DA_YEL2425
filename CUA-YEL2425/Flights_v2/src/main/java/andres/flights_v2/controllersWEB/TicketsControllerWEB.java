@@ -33,7 +33,7 @@ public class TicketsControllerWEB {
     }
 
     // Endpoint: POST, requiere un objeto TicketDTO para crear un ticket nuevo
-    // Te lleva a la pagina de confirmacion de compra
+    // Te lleva a la pagina de exito de compra
     @PostMapping("/CreateTicket")
     public String createNewTicket(@Valid @ModelAttribute TicketDTO ticketDTO, Model model) {
         try {

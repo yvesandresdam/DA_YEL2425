@@ -20,21 +20,21 @@ public class FlightsControllerWEB {
     @Autowired
     private FlightService flightService;
 
-    // Endpoint:
+    // Endpoint: Devuelve todos los origenes posibles
     @GetMapping("/Origins")
-    public String WebShowOrigins(Model model) {
-        List<AirportEntity> origins = flightService.findAllOrigins();
-        model.addAttribute("origins", origins);
-        model.addAttribute("ticketDTO", new TicketDTO());
-        return "form_buy_ticket";
+    @ResponseBody
+    public List<AirportEntity> findOrigins() {
+        return flightService.findAllOrigins();
     }
 
+    // Endpoint: Devuelve todos los destinos para un origen
     @GetMapping("/Destinations/{originId}")
     @ResponseBody
     public List<AirportEntity> findDestinationsByOrigin(@PathVariable String originId) {
         return flightService.findDestinationsByOrigin(originId);
     }
 
+    // Devuelve una lista de codigos de vuelo para un origen y un destino
     @GetMapping("/{originId}/{destinationId}")
     @ResponseBody
     public List<String> findFlightCodeByRoute(@PathVariable String originId,
@@ -42,3 +42,4 @@ public class FlightsControllerWEB {
        return flightService.findFlightCodeByRoute(originId, destinationId);
     }
 }
+

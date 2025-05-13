@@ -51,6 +51,8 @@ public class TicketsController {
         loadDate();
         loadOrigins();
         loadTypeFlight();
+
+        // event_listeners
         listenerOrigins();
         listenerDestination();
         listenerTypeFlights();
@@ -72,6 +74,7 @@ public class TicketsController {
         originCombo.getItems().addAll(flightService.getAllOrigins());
     }
 
+    // EVENT LISTENERS
     public void listenerOrigins() {
         originCombo.setOnAction(event -> {
             AirportEntity selectedOrigin = originCombo.getSelectionModel().getSelectedItem();
@@ -110,6 +113,7 @@ public class TicketsController {
         });
     }
 
+    // FUNCIONALIDAD DE LOS BOTONES 'CREATE_USER' Y 'CREATE_TICKET'
     public void createNewUser(ActionEvent event) {
         try {
             Parent nuevaVista = FXMLLoader.load(getClass().getResource("/andres/flights_jfxtemplate/nvg-passenger-creation.fxml"));
@@ -147,38 +151,3 @@ public class TicketsController {
     }
 }
 
-/*
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.registerModule(new JavaTimeModule());
-            String json = mapper.writeValueAsString(ticket);
-
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/flights_api/Tickets/CreateTicket"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(json))
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            String responseBody = response.body().trim();
-
-            if ("true".equals(response.body())) {
-                Parent nuevaVista = FXMLLoader.load(getClass().getResource("/andres/flights_jfxtemplate/msg_ticket_success.fxml"));
-                Scene nuevaEscena = new Scene(nuevaVista);
-
-                Node source = (Node) event.getSource();
-                Stage stage = (Stage) source.getScene().getWindow();
-
-                stage.setScene(nuevaEscena);
-                stage.show();
-            } else if ("false".equalsIgnoreCase(responseBody)) {
-                System.out.println("respuesta falsa");
-            } else {
-                System.out.println("Respuesta inesperada del servidor: " + responseBody);
-            }
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
-             */
