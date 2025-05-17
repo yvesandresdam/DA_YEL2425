@@ -1,16 +1,12 @@
 package andres.flights_jfxtemplate.Controller;
 
 import andres.flights_jfxtemplate.Service.PassengerService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.io.OutputStream;
 
 import andres.flights_jfxtemplate.DTO.PassengerDTO;
 import javafx.stage.Stage;
@@ -38,6 +34,10 @@ public class PassengerController {
         genderCombo.getItems().addAll("M", "F");
     }
 
+    public void setPassportField(String passportno) {
+        passportField.setText(passportno);
+    }
+
     @FXML
     private void createNewUser() {
         PassengerDTO passenger = new PassengerDTO();
@@ -47,6 +47,27 @@ public class PassengerController {
         passenger.setAddress(addressField.getText());
         passenger.setPhone(phoneField.getText());
         passenger.setSex(genderCombo.getValue());
+
+        if (!passenger.getPassportno().matches("^[A-Z][0-9]{7}$")) {
+            showErrorMessage("Entrada inválida", "El pasaporte no tiene un formato correcto");
+            return;
+        }
+
+        if (!passenger.getPhone().matches("^[+34][0-9]{9}$")) {
+            showWarningMessage("Entrada inválida", "El numero movil no tiene un formato correcto");
+            return;
+        }
+
+        if (passenger.getFirstname().isEmpty()) {
+            showInformationMessage("Entrada inválida", "El nombre no debe estar en blanco");
+            return;
+        }
+
+        boolean duplicatedPassport = validateDuplicatedPassport(passenger.getPassportno());
+        if (duplicatedPassport) {
+            showInformationMessage("Entrada inválida", "El pasaporte ya existe en la base de datos");
+            return;
+        }
 
         passengerService.createNewPassenger(passenger);
 
@@ -66,6 +87,34 @@ public class PassengerController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean validateDuplicatedPassport(String passportno){
+        return passengerService.isDuplicatedPassport(passportno);
+    }
+
+    private void showErrorMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showWarningMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showInformationMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
 

@@ -1,5 +1,7 @@
 package andres.flights_jfxtemplate.Service;
 
+import andres.flights_jfxtemplate.Bridges.Ticket_in_Passenger;
+import andres.flights_jfxtemplate.Controller.PassengerController;
 import andres.flights_jfxtemplate.DTO.TicketDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -15,14 +17,16 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 
 public class TicketService {
 
-    public void createNewTicket(ActionEvent event, TicketDTO ticket) {
+    public void createNewTicket(ActionEvent event, TicketDTO ticket, String passportno) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             String json = mapper.writeValueAsString(ticket);
+            System.out.println(json);
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -42,7 +46,26 @@ public class TicketService {
                 stage.setScene(nuevaEscena);
                 stage.show();
             } else if ("false".equalsIgnoreCase(responseBody)) {
-                System.out.println("respuesta falsa");
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/andres/flights_jfxtemplate/nvg-passenger-creation.fxml"));
+                Parent nuevaVista = loader.load();
+
+                Ticket_in_Passenger controller = loader.getController();
+                controller.setPassportno(passportno);
+
+                Scene nuevaEscena = new Scene(nuevaVista);
+                Node source = (Node) event.getSource();
+                Stage stage = (Stage) source.getScene().getWindow();
+                stage.setScene(nuevaEscena);
+                stage.show();
+                /*
+                Parent nuevaVista = FXMLLoader.load(getClass().getResource("/andres/flights_jfxtemplate/nvg-passenger-creation.fxml"));
+                Scene nuevaEscena = new Scene(nuevaVista);
+                Node source = (Node) event.getSource();
+                Stage stage = (Stage) source.getScene().getWindow();
+                stage.setScene(nuevaEscena);
+                stage.show();
+
+                 */
             } else {
                 System.out.println("Respuesta inesperada del servidor: " + responseBody);
             }
@@ -51,4 +74,98 @@ public class TicketService {
             e.printStackTrace();
         }
     }
+
+
+    public boolean getAvailableSeats(String flightCode, LocalDate flightDate) {
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/flights_api/Flights/Available/" + flightCode + "/" + flightDate))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                return (response.body().equals("true"));
+            } else {
+                System.out.println("Error: " + response.statusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean getDuplicatedFlight(String passportno, LocalDate flightDate){
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/flights_api/Tickets/Available/" + flightDate + "/" + passportno))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                return (response.body().equals("true"));
+            } else {
+                System.out.println("Error: " + response.statusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean checkServerStatus() {
+        String url = "http://localhost:8080/fligths_api";
+
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
+
+        /*
+        public List<AirportEntity> getDestinationsByOrigin(String originId) {
+        List<AirportEntity> destinations = new ArrayList<>();
+
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/flights_api/Flights/Destinations/" + originId))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                JSONArray jsonArray = new JSONArray(response.body());
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject json = jsonArray.getJSONObject(i);
+                    String code = json.getString("code");
+                    String name = json.getString("name");
+                    destinations.add(new AirportEntity(code, name));
+                }
+            } else {
+                System.out.println("Error: " + response.statusCode());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return destinations;
+    }
+         */
+

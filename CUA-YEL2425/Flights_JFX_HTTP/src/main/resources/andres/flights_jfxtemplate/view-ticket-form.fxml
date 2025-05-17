@@ -10,9 +10,7 @@
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <ComboBox fx:id="dayCombo" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" promptText="Day" />
-                  <ComboBox fx:id="monthCombo" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" promptText="Month" />
-                  <ComboBox fx:id="yearCombo" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" promptText="Year" />
+                  <DatePicker fx:id="datePicker" minWidth="240.0"/>
                </children>
                <VBox.margin>
                   <Insets top="20.0" />
@@ -34,6 +32,12 @@
                <children>
                   <TextField fx:id="passportField" prefWidth="170.0" promptText="Insert your passport" />
                   <Button fx:id="newUserButton" mnemonicParsing="false" text="Create" minWidth="60.0" onAction="#createNewUser"/>
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" prefWidth="260.0" spacing="10.0">
+               <children>
+                  <Button fx:id="logButton" prefWidth="170.0" text="View form errors" onAction="#showErrorLog"/>
+                  <Label fx:id="logLabel" prefWidth="60.0" minHeight="24" style="-fx-background-color: green;"/>
                </children>
             </HBox>
             <Button fx:id="newTicketButton" minWidth="240.0" mnemonicParsing="false" text="Buy Ticket" onAction="#createNewTicket"/>

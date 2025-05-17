@@ -5,33 +5,22 @@ import andres.flights_jfxtemplate.Entity.AirportEntity;
 import andres.flights_jfxtemplate.Entity.FlightEntity;
 import andres.flights_jfxtemplate.Service.FlightService;
 import andres.flights_jfxtemplate.Service.TicketService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.util.List;
 
 public class TicketsController {
     @FXML
-    private ComboBox<Integer> dayCombo;
-    @FXML
-    private ComboBox<Integer> monthCombo;
-    @FXML
-    private ComboBox<Integer> yearCombo;
+    private DatePicker datePicker;
     @FXML
     private ComboBox<AirportEntity> originCombo;
     @FXML
@@ -42,12 +31,21 @@ public class TicketsController {
     private ComboBox<String> typeFlightCombo;
     @FXML
     private TextField passportField;
+    @FXML
+    private Button logButton;
+    @FXML
+    private Label logLabel;
+
+    private String errorMessage;
+    private boolean formHasErrors;
 
     private FlightService flightService = new FlightService();
     private TicketService ticketService = new TicketService();
 
     @FXML
     public void initialize() {
+        checkServerStatus();
+
         loadDate();
         loadOrigins();
         loadTypeFlight();
@@ -59,15 +57,15 @@ public class TicketsController {
     }
 
     private void loadDate() {
-        for (int i = 1; i <= 31; i++) {
-            dayCombo.getItems().add(i);
-        }
-        for (int i = 1; i <= 12; i++) {
-            monthCombo.getItems().add(i);
-        }
-        for (int i = 2025; i <= 2030; i++) {
-            yearCombo.getItems().add(i);
-        }
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(LocalDate.now()));
+            }
+        });
+
+        datePicker.setValue(LocalDate.now());
     }
 
     private void loadOrigins() {
@@ -130,24 +128,92 @@ public class TicketsController {
     }
 
     public void createNewTicket(ActionEvent event) {
-        Integer day = dayCombo.getValue();
-        Integer month = monthCombo.getValue();
-        Integer year = yearCombo.getValue();
         FlightEntity flight = flightCombo.getValue();
         String type = typeFlightCombo.getValue();
         String passport = passportField.getText();
+        System.out.println("error");
 
-        if (day == null || month == null || year == null || flight == null || type == null || passport == null || passport.isEmpty()) {
-            System.out.println("Faltan datos del formulario.");
+        formHasErrors = false;
+
+        if (flight == null || type == null || passport == null || passport.isEmpty()) {
+            logLabel.setStyle("-fx-background-color: red;");
+            errorMessage = "Faltan datos en el formulario";
+            formHasErrors = true;
+            return;
+        }
+
+        if (!passport.matches("^[A-Z][0-9]{7}$")) {
+            logLabel.setStyle("-fx-background-color: red;");
+            errorMessage = "Formato de pasaporte incorrecto";
+            System.out.println("Formato de pasaporte inválido. Debe ser una letra seguida de 7 números (ej: A1234567).");
+            formHasErrors = true;
+            return;
+        }
+
+        boolean availableSeats = isAvailableSeats();
+        if (!availableSeats) {
+            showWarningMessage("Atencion", "No quedan asientos disponibles");
+            formHasErrors = true;
+            return;
+        }
+
+        boolean duplicatedTicket = isDuplicatedTicket();
+        if (duplicatedTicket) {
+            showWarningMessage("Atencion", "Ya existe un ticket para esa fecha");
+            formHasErrors = true;
             return;
         }
 
         TicketDTO ticket = new TicketDTO();
-        ticket.setDateOfTravel(LocalDate.of(year, month, day));
+        ticket.setDateOfTravel(datePicker.getValue());
         ticket.setFlightCode(flight.getFlightCode());
         ticket.setPassportno(passport);
+        System.out.println(ticket.getPassportno());
 
-        ticketService.createNewTicket(event, ticket);
+        if(formHasErrors){
+            showWarningMessage("Error", "Revise el log de errores");
+        }
+
+        ticketService.createNewTicket(event, ticket, passport);
+    }
+
+    public void showErrorLog(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText("El formulario contiene errores");
+        alert.setContentText(errorMessage);
+        alert.showAndWait();
+    }
+
+    private void showWarningMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private boolean isAvailableSeats() {
+        String flightCode = flightCombo.getValue().getFlightCode();
+        LocalDate flightDate = datePicker.getValue();
+        return ticketService.getAvailableSeats(flightCode, flightDate);
+    }
+
+    private boolean isDuplicatedTicket() {
+        String passportno = passportField.getText();
+        LocalDate flightDate = datePicker.getValue();
+        return ticketService.getDuplicatedFlight(passportno, flightDate);
+    }
+
+    private void checkServerStatus(){
+        boolean status = ticketService.checkServerStatus();
+        if(!status){
+            logLabel.setStyle("-fx-background-color: red;");
+            errorMessage = "La aplicacion no esta conectada";
+            formHasErrors = true;
+        } else{
+            formHasErrors = false;
+        }
     }
 }
 

@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
+<?import javafx.scene.layout.HBox?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       alignment="CENTER"
@@ -13,8 +14,12 @@
       fx:controller="andres.flights_jfxtemplate.Bridges.Ticket_in_Passenger">
 
     <children>
-        <Label text="Registro de un nuevo pasajero" style="-fx-font-size: 18px;"/>
-        <Button text="Nuevo Usuario" fx:id="buttonNextScreen" onAction="#loadNextScreen"/>
+        <Label text="The passport does not exist" style="-fx-font-size: 18px;"/>
+        <Label text="¿Do you want to create a new user?" style="-fx-font-size: 15px;"/>
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="YES" fx:id="buttonNextScreen" onAction="#loadPassengerScreen"/>
+            <Button text="NO" fx:id="buttonPreviousScreen" onAction="#loadTicketScreen"/>
+        </HBox>
     </children>
 
 </VBox>
