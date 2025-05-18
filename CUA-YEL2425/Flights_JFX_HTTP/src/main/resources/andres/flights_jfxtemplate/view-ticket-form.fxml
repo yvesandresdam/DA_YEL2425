@@ -36,7 +36,7 @@
             </HBox>
             <HBox alignment="TOP_CENTER" prefWidth="260.0" spacing="10.0">
                <children>
-                  <Button fx:id="logButton" prefWidth="170.0" text="View form errors" onAction="#showErrorLog"/>
+                  <Button fx:id="logButton" prefWidth="170.0" text="Error log panel" onAction="#showErrorMessage"/>
                   <Label fx:id="logLabel" prefWidth="60.0" minHeight="24" style="-fx-background-color: green;"/>
                </children>
             </HBox>

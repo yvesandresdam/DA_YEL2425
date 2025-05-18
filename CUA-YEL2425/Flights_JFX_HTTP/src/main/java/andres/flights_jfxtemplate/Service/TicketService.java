@@ -26,7 +26,6 @@ public class TicketService {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             String json = mapper.writeValueAsString(ticket);
-            System.out.println(json);
 
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -57,15 +56,6 @@ public class TicketService {
                 Stage stage = (Stage) source.getScene().getWindow();
                 stage.setScene(nuevaEscena);
                 stage.show();
-                /*
-                Parent nuevaVista = FXMLLoader.load(getClass().getResource("/andres/flights_jfxtemplate/nvg-passenger-creation.fxml"));
-                Scene nuevaEscena = new Scene(nuevaVista);
-                Node source = (Node) event.getSource();
-                Stage stage = (Stage) source.getScene().getWindow();
-                stage.setScene(nuevaEscena);
-                stage.show();
-
-                 */
             } else {
                 System.out.println("Respuesta inesperada del servidor: " + responseBody);
             }
@@ -115,7 +105,7 @@ public class TicketService {
     }
 
     public boolean checkServerStatus() {
-        String url = "http://localhost:8080/fligths_api";
+        String url = "http://localhost:8080/flights_api";
 
         try {
             HttpClient client = HttpClient.newHttpClient();
@@ -126,7 +116,7 @@ public class TicketService {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() == 200) {
+            if (response.statusCode() == 200 || response.statusCode() == 302) {
                 return true;
             } else {
                 return false;
@@ -138,34 +128,4 @@ public class TicketService {
     }
 }
 
-        /*
-        public List<AirportEntity> getDestinationsByOrigin(String originId) {
-        List<AirportEntity> destinations = new ArrayList<>();
-
-        try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/flights_api/Flights/Destinations/" + originId))
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                JSONArray jsonArray = new JSONArray(response.body());
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject json = jsonArray.getJSONObject(i);
-                    String code = json.getString("code");
-                    String name = json.getString("name");
-                    destinations.add(new AirportEntity(code, name));
-                }
-            } else {
-                System.out.println("Error: " + response.statusCode());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return destinations;
-    }
-         */
 

@@ -17,7 +17,7 @@ public class PassengerController {
     @FXML
     private TextField lastNameField;
     @FXML
-    private TextField passportField;
+    private Label passportField;
     @FXML
     private TextField addressField;
     @FXML
@@ -49,23 +49,28 @@ public class PassengerController {
         passenger.setSex(genderCombo.getValue());
 
         if (!passenger.getPassportno().matches("^[A-Z][0-9]{7}$")) {
-            showErrorMessage("Entrada inválida", "El pasaporte no tiene un formato correcto");
-            return;
-        }
-
-        if (!passenger.getPhone().matches("^[+34][0-9]{9}$")) {
-            showWarningMessage("Entrada inválida", "El numero movil no tiene un formato correcto");
+            showWarningMessage("Entrada inválida", "El pasaporte tiene un formato incorrecto.");
             return;
         }
 
         if (passenger.getFirstname().isEmpty()) {
-            showInformationMessage("Entrada inválida", "El nombre no debe estar en blanco");
+            showWarningMessage("Entrada inválida", "El nombre no debe estar en blanco.");
+            return;
+        }
+
+        if (!passenger.getPhone().matches("^\\+34[0-9]{9}$")) {
+            showWarningMessage("Entrada inválida", "El numero movil tiene un formato incorrecto.\nDebe comenzar con el codigo del pais, seguido de 9 numeros.");
+            return;
+        }
+
+        if (passenger.getSex() == null) {
+            showWarningMessage("Entrada inválida", "El sexo no debe estar en blanco.");
             return;
         }
 
         boolean duplicatedPassport = validateDuplicatedPassport(passenger.getPassportno());
         if (duplicatedPassport) {
-            showInformationMessage("Entrada inválida", "El pasaporte ya existe en la base de datos");
+            showWarningMessage("Entrada inválida", "El pasaporte ya existe en la base de datos.");
             return;
         }
 
@@ -89,7 +94,7 @@ public class PassengerController {
         }
     }
 
-    private boolean validateDuplicatedPassport(String passportno){
+    private boolean validateDuplicatedPassport(String passportno) {
         return passengerService.isDuplicatedPassport(passportno);
     }
 

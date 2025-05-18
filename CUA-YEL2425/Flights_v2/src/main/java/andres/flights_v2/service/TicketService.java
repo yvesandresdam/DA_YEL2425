@@ -38,7 +38,6 @@ public class TicketService {
         if (passenger == null)
             return false;
 
-        // Saving Ticket
         try {
             ticketDAO.save(newTicket);
             return true;

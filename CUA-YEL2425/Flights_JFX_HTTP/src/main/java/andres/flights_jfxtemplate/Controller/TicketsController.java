@@ -1,5 +1,6 @@
 package andres.flights_jfxtemplate.Controller;
 
+import andres.flights_jfxtemplate.Bridges.Ticket_in_Passenger;
 import andres.flights_jfxtemplate.DTO.TicketDTO;
 import andres.flights_jfxtemplate.Entity.AirportEntity;
 import andres.flights_jfxtemplate.Entity.FlightEntity;
@@ -44,8 +45,10 @@ public class TicketsController {
 
     @FXML
     public void initialize() {
+        // check server_status
         checkServerStatus();
 
+        // load combo_box
         loadDate();
         loadOrigins();
         loadTypeFlight();
@@ -64,7 +67,6 @@ public class TicketsController {
                 setDisable(empty || date.isBefore(LocalDate.now()));
             }
         });
-
         datePicker.setValue(LocalDate.now());
     }
 
@@ -114,12 +116,20 @@ public class TicketsController {
     // FUNCIONALIDAD DE LOS BOTONES 'CREATE_USER' Y 'CREATE_TICKET'
     public void createNewUser(ActionEvent event) {
         try {
-            Parent nuevaVista = FXMLLoader.load(getClass().getResource("/andres/flights_jfxtemplate/nvg-passenger-creation.fxml"));
+            String passport = passportField.getText();
+            if (passport.isEmpty()) {
+                showWarningMessage("Error", "New user can't be created.\nPassport must be 8 characters long.");
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/andres/flights_jfxtemplate/nvg-passenger-creation.fxml"));
+            Parent nuevaVista = loader.load();
+
+            Ticket_in_Passenger controller = loader.getController();
+            controller.setPassportno(passport);
+
             Scene nuevaEscena = new Scene(nuevaVista);
-
-            Node source = (Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(nuevaEscena);
             stage.show();
         } catch (IOException e) {
@@ -131,36 +141,12 @@ public class TicketsController {
         FlightEntity flight = flightCombo.getValue();
         String type = typeFlightCombo.getValue();
         String passport = passportField.getText();
-        System.out.println("error");
 
         formHasErrors = false;
+        validateFields(flight, passport, type);
 
-        if (flight == null || type == null || passport == null || passport.isEmpty()) {
-            logLabel.setStyle("-fx-background-color: red;");
-            errorMessage = "Faltan datos en el formulario";
-            formHasErrors = true;
-            return;
-        }
-
-        if (!passport.matches("^[A-Z][0-9]{7}$")) {
-            logLabel.setStyle("-fx-background-color: red;");
-            errorMessage = "Formato de pasaporte incorrecto";
-            System.out.println("Formato de pasaporte inválido. Debe ser una letra seguida de 7 números (ej: A1234567).");
-            formHasErrors = true;
-            return;
-        }
-
-        boolean availableSeats = isAvailableSeats();
-        if (!availableSeats) {
-            showWarningMessage("Atencion", "No quedan asientos disponibles");
-            formHasErrors = true;
-            return;
-        }
-
-        boolean duplicatedTicket = isDuplicatedTicket();
-        if (duplicatedTicket) {
-            showWarningMessage("Atencion", "Ya existe un ticket para esa fecha");
-            formHasErrors = true;
+        if (formHasErrors) {
+            showWarningMessage("Warning", "The form present several errors.\nCheck the error log panel.");
             return;
         }
 
@@ -168,29 +154,56 @@ public class TicketsController {
         ticket.setDateOfTravel(datePicker.getValue());
         ticket.setFlightCode(flight.getFlightCode());
         ticket.setPassportno(passport);
-        System.out.println(ticket.getPassportno());
-
-        if(formHasErrors){
-            showWarningMessage("Error", "Revise el log de errores");
-        }
 
         ticketService.createNewTicket(event, ticket, passport);
     }
 
-    public void showErrorLog(){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning");
-        alert.setHeaderText("El formulario contiene errores");
-        alert.setContentText(errorMessage);
-        alert.showAndWait();
-    }
+    private void validateFields(FlightEntity flight, String passport, String type) {
+        checkServerStatus();
+        if(formHasErrors)
+            return;
 
-    private void showWarningMessage(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        if (flight == null) {
+            logLabel.setStyle("-fx-background-color: red;");
+            errorMessage = "Flight field must be completed.";
+            formHasErrors = true;
+            return;
+        }
+
+        if (type == null) {
+            logLabel.setStyle("-fx-background-color: red;");
+            errorMessage = "Flight-VIP field must be completed.";
+            formHasErrors = true;
+            return;
+        }
+
+        if (passport == null || passport.isEmpty()) {
+            logLabel.setStyle("-fx-background-color: red;");
+            errorMessage = "Passport field must be completed.";
+            formHasErrors = true;
+            return;
+        }
+
+        if (!passport.matches("^[A-Z][0-9]{7}$")) {
+            logLabel.setStyle("-fx-background-color: red;");
+            errorMessage = "Passport format is not valid.";
+            formHasErrors = true;
+            return;
+        }
+
+        boolean availableSeats = isAvailableSeats();
+        if (!availableSeats) {
+            errorMessage = "There are no available seats.";
+            formHasErrors = true;
+            return;
+        }
+
+        boolean duplicatedTicket = isDuplicatedTicket();
+        if (duplicatedTicket) {
+            errorMessage = "There is a ticket for that day already.";
+            formHasErrors = true;
+            return;
+        }
     }
 
     private boolean isAvailableSeats() {
@@ -205,15 +218,33 @@ public class TicketsController {
         return ticketService.getDuplicatedFlight(passportno, flightDate);
     }
 
-    private void checkServerStatus(){
+    private void checkServerStatus() {
         boolean status = ticketService.checkServerStatus();
-        if(!status){
+        if (!status) {
             logLabel.setStyle("-fx-background-color: red;");
-            errorMessage = "La aplicacion no esta conectada";
+            errorMessage = "The application is not connected to the server.";
             formHasErrors = true;
-        } else{
+        } else {
             formHasErrors = false;
         }
     }
+
+    public void showErrorMessage() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Please, check these form errors");
+        alert.setContentText(errorMessage);
+        alert.showAndWait();
+    }
+
+    private void showWarningMessage(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 }
+
 

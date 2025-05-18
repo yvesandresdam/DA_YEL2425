@@ -12,7 +12,7 @@ public class PassengerService {
     private IPassengerEntityDAO passengerDAO;
 
     public boolean createPassenger(PassengerDTO passengerDTO) {
-        // validatePassenger(passengerDTO);
+        validatePassenger(passengerDTO);
         // Convertir el DTO a una entidad
         PassengerEntity passengerEntity = new PassengerEntity();
         passengerEntity.setPassportno(passengerDTO.getPassportno());
@@ -37,22 +37,20 @@ public class PassengerService {
 
     // VALIDATING FUNCTIONS
     // SERVICE LAYER
-    private void validatePassport(String passport) {
-        if (passport == null || passport.trim().isEmpty()) {
-            throw new IllegalArgumentException("Passport identity is mandatory.");
-        }
-        if (passport.length() != 8) {
-            throw new IllegalArgumentException("Passport identity number must be 8 characters long.");
-        }
-    }
-
-    private void validatePassenger(PassengerEntity passenger) {
+    private void validatePassenger(PassengerDTO passenger) {
         if (passenger.getFirstname() == null || passenger.getFirstname().trim().isEmpty()) {
             throw new IllegalArgumentException("First name is mandatory.");
         }
 
         if (passenger.getLastname() == null || passenger.getLastname().trim().isEmpty()) {
             throw new IllegalArgumentException("Last name is mandatory.");
+        }
+
+        if (passenger.getPassportno() == null || passenger.getPassportno().trim().isEmpty()) {
+            throw new IllegalArgumentException("Passport identity is mandatory.");
+        }
+        if (passenger.getPassportno().length() != 8) {
+            throw new IllegalArgumentException("Passport identity number must be 8 characters long.");
         }
     }
 }

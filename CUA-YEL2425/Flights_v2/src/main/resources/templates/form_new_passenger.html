@@ -12,17 +12,6 @@
 <body>
 <div class="form-container">
     <form th:object="${passenger}" method="post" th:action="@{/Web/Passenger/NewPassenger/Create}">
-
-        <!-- ALERTAS -->
-        <!-- Este metodo para mostrar alertas no me disgustaba.
-             Lo dejo comentado para acordarme de implementarlo en el futuro
-        -->
-        <!--
-        <div th:if="${#fields.hasErrors('sex')}" class="alert">
-            <p th:errors="*{sex}">Sex must be 'M' or 'F'</p>
-        </div>
-        -->
-
         <!--    FIRST NAME   -->
         <div class="form-group">
             <label for="firstname">First Name:</label>
@@ -43,8 +32,10 @@
 
         <!--    PASSPORT   -->
         <div class="form-group">
-            <label for="passportno">Passport:</label>
-            <input type="text" id="passportno" th:field="*{passportno}">
+            <label>Passport:</label>
+            <input type="hidden" th:field="*{passportno}"/>
+            <label class="form-control" th:text="*{passportno}"></label>
+
             <div th:if="${#fields.hasErrors('passportno')}" class="error-message">
                 <p th:errors="*{passportno}">Passport must begin with letter</p>
             </div>
@@ -81,3 +72,22 @@
 </body>
 
 </html>
+
+
+<!-- ALERTAS -->
+<!-- Este metodo para mostrar alertas no me disgustaba.
+     Lo dejo comentado para acordarme de implementarlo en el futuro
+-->
+<!--
+<div th:if="${#fields.hasErrors('sex')}" class="alert">
+    <p th:errors="*{sex}">Sex must be 'M' or 'F'</p>
+</div>
+
+        <div class="form-group">
+            <label for="passportno">Passport:</label>
+            <input type="text" id="passportno" th:field="*{passportno}">
+            <div th:if="${#fields.hasErrors('passportno')}" class="error-message">
+                <p th:errors="*{passportno}">Passport must begin with letter</p>
+            </div>
+        </div>
+-->

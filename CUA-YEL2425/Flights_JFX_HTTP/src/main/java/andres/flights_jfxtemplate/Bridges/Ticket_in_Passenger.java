@@ -27,16 +27,6 @@ public class Ticket_in_Passenger {
         Stage stage = (Stage) buttonNextScreen.getScene().getWindow();
         stage.setScene(scene);
         stage.showAndWait();
-
-        /*
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/andres/flights_jfxtemplate/view-passenger-form.fxml"));
-        Scene scene = new Scene(loader.load());
-
-        Stage stage = (Stage) buttonNextScreen.getScene().getWindow();
-        stage.setScene(scene);
-        stage.showAndWait();
-
-         */
     }
 
     public void loadTicketScreen() throws IOException {

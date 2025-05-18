@@ -16,7 +16,7 @@
             <children>
             <TextField fx:id="nameField" maxWidth="240.0" prefWidth="240.0" promptText="Insert your name" />
             <TextField fx:id="lastNameField" layoutX="90.0" layoutY="50.0" maxWidth="240.0" prefWidth="240.0" promptText="Insert your last name" />
-            <TextField fx:id="passportField" layoutX="90.0" layoutY="95.0" maxWidth="240.0" prefWidth="240.0" promptText="Insert your passport" />
+            <Label fx:id="passportField" layoutX="90.0" layoutY="95.0" maxWidth="240.0" prefWidth="240.0" />
             <TextField fx:id="addressField" layoutX="90.0" layoutY="140.0" maxWidth="240.0" prefWidth="240.0" promptText="Insert your address" />
             <TextField fx:id="phoneField" layoutX="90.0" layoutY="140.0" maxWidth="240.0" prefWidth="240.0" promptText="Insert your phone" />
                 <ComboBox fx:id="genderCombo" minWidth="240.0" prefWidth="200.0" promptText="Select an gender">
