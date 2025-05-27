@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="andres.flights_jfxtemplate.Controller.TicketsController">
+    <children>
+        <VBox alignment="TOP_CENTER" spacing="20.0" layoutX="0.0" layoutY="0.0" prefWidth="400.0" prefHeight="500.0">
+            <children>
+                <ComboBox fx:id="originCombo" prefWidth="240.0" promptText="Select an origin"/>
+                <ComboBox fx:id="destinationCombo" prefWidth="240.0" promptText="Select a destination"/>
+                <ComboBox fx:id="flightCombo" prefWidth="240.0" promptText="Select a flight"/>
+                <Button fx:id="newTicketButton" prefWidth="240.0" mnemonicParsing="false" text="Buy Ticket"/>
+            </children>
+            <padding>
+                <Insets top="50.0"/>
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>
+

@@ -5,7 +5,6 @@ module andres.flights_jfxtemplate {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
     requires org.json;
-    requires java.desktop;
 
 
     opens andres.flights_jfxtemplate to javafx.fxml;
