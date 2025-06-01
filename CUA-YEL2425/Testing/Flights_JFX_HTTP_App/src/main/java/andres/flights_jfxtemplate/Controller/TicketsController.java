@@ -1,8 +1,11 @@
 package andres.flights_jfxtemplate.Controller;
 
+import andres.flights_jfxtemplate.Bridges.Ticket_in_Passenger;
+import andres.flights_jfxtemplate.DTO.TicketDTO;
 import andres.flights_jfxtemplate.Entity.AirportEntity;
 import andres.flights_jfxtemplate.Entity.FlightEntity;
 import andres.flights_jfxtemplate.Service.FlightService;
+import andres.flights_jfxtemplate.Service.TicketService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,26 +21,56 @@ import java.util.List;
 
 public class TicketsController {
     @FXML
-    public ComboBox<AirportEntity> originCombo;
+    private DatePicker datePicker;
+    @FXML
+    private ComboBox<AirportEntity> originCombo;
     @FXML
     private ComboBox<AirportEntity> destinationCombo;
     @FXML
     private ComboBox<FlightEntity> flightCombo;
+    @FXML
+    private ComboBox<String> typeFlightCombo;
+    @FXML
+    private TextField passportField;
+    @FXML
+    private Button logButton;
+    @FXML
+    private Label logLabel;
 
-    public FlightService flightService = new FlightService();
+    private String errorMessage;
+    private boolean formHasErrors;
+
+    private FlightService flightService = new FlightService();
+    private TicketService ticketService = new TicketService();
 
     @FXML
     public void initialize() {
+        // check server_status
+        checkServerStatus();
 
         // load combo_box
+        loadDate();
         loadOrigins();
+        loadTypeFlight();
 
         // event_listeners
         listenerOrigins();
         listenerDestination();
+        listenerTypeFlights();
     }
 
-    public void loadOrigins() {
+    private void loadDate() {
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(LocalDate.now()));
+            }
+        });
+        datePicker.setValue(LocalDate.now());
+    }
+
+    private void loadOrigins() {
         originCombo.getItems().addAll(flightService.getAllOrigins());
     }
 
@@ -65,7 +98,21 @@ public class TicketsController {
         });
     }
 
-    /*
+    private void loadTypeFlight() {
+        typeFlightCombo.getItems().add("♪");
+        typeFlightCombo.getItems().add("⏱");
+        typeFlightCombo.getItems().add("✈");
+    }
+
+    public void listenerTypeFlights() {
+        typeFlightCombo.setOnAction(event -> {
+            int selectedIndex = typeFlightCombo.getSelectionModel().getSelectedIndex();
+            if (selectedIndex >= 0 && selectedIndex < flightCombo.getItems().size()) {
+                flightCombo.getSelectionModel().select(selectedIndex);
+            }
+        });
+    }
+
     // FUNCIONALIDAD DE LOS BOTONES 'CREATE_USER' Y 'CREATE_TICKET'
     public void createNewUser(ActionEvent event) {
         try {
@@ -171,7 +218,16 @@ public class TicketsController {
         return ticketService.getDuplicatedFlight(passportno, flightDate);
     }
 
-
+    private void checkServerStatus() {
+        boolean status = ticketService.checkServerStatus();
+        if (!status) {
+            logLabel.setStyle("-fx-background-color: red;");
+            errorMessage = "The application is not connected to the server.";
+            formHasErrors = true;
+        } else {
+            formHasErrors = false;
+        }
+    }
 
     public void showErrorMessage() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -188,16 +244,6 @@ public class TicketsController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    public boolean isFormHasErrors() {
-        return formHasErrors;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-     */
 
 }
 

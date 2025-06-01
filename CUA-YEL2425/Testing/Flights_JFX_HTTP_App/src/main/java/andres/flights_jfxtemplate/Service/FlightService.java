@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import andres.flights_jfxtemplate.DTO.TicketDTO;
 import andres.flights_jfxtemplate.Entity.AirportEntity;
 import andres.flights_jfxtemplate.Entity.FlightEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -7,12 +7,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class HTTPApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("view-ticket-form.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HTTPApplication.class.getResource("view-ticket-form.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+        stage.setTitle("Flights APP");
         stage.setScene(scene);
         stage.show();
     }

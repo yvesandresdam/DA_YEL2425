@@ -81,36 +81,9 @@ public class FlightServiceTest {
         assertEquals("Tampa International Airport", result.get(9).getName());
     }
 
-
     // TESTS
     // FIND DESTINATIONS
     // BY ORIGIN
-    @Test
-    public void testFindDestinationsByOrigin_LIA() {
-        String originCode = "LIA";
-        AirportEntity destination1 = new AirportEntity("GBIA", "George Bush Intercontinental Airport");
-
-        when(flightDAO.findDestinationsByOrigin(originCode)).thenReturn(List.of(destination1));
-
-        List<AirportEntity> result = flightService.findDestinationsByOrigin(originCode);
-        assertEquals(1, result.size());
-        assertEquals("GBIA", result.get(0).getCode());
-        assertEquals("George Bush Intercontinental Airport", result.get(0).getName());
-    }
-
-    @Test
-    public void testFindDestinationsByOrigin_GBIA() {
-        String originCode = "GBIA";
-        AirportEntity destination1 = new AirportEntity("IGIA", "Indira GandhiInternational Airport");
-
-        when(flightDAO.findDestinationsByOrigin(originCode)).thenReturn(List.of(destination1));
-
-        List<AirportEntity> result = flightService.findDestinationsByOrigin(originCode);
-        assertEquals(1, result.size());
-        assertEquals("IGIA", result.get(0).getCode());
-        assertEquals("Indira GandhiInternational Airport", result.get(0).getName());
-    }
-
     @Test
     public void testFindDestinationsByOrigin_CSIA() {
         String originCode = "CSIA";
@@ -143,6 +116,57 @@ public class FlightServiceTest {
         assertEquals("Chhatrapati Shivaji International Airport", result.get(1).getName());
     }
 
+    @Test
+    public void testFindDestinationsByOrigin_LIA() {
+        String originCode = "LIA";
+        AirportEntity destination1 = new AirportEntity("GBIA", "George Bush Intercontinental Airport");
+
+        when(flightDAO.findDestinationsByOrigin(originCode)).thenReturn(List.of(destination1));
+
+        List<AirportEntity> result = flightService.findDestinationsByOrigin(originCode);
+        assertEquals(1, result.size());
+        assertEquals("GBIA", result.get(0).getCode());
+        assertEquals("George Bush Intercontinental Airport", result.get(0).getName());
+    }
+
+    @Test
+    public void testFindDestinationsByOrigin_GBIA() {
+        String originCode = "GBIA";
+        AirportEntity destination1 = new AirportEntity("IGIA", "Indira GandhiInternational Airport");
+
+        when(flightDAO.findDestinationsByOrigin(originCode)).thenReturn(List.of(destination1));
+
+        List<AirportEntity> result = flightService.findDestinationsByOrigin(originCode);
+        assertEquals(1, result.size());
+        assertEquals("IGIA", result.get(0).getCode());
+        assertEquals("Indira GandhiInternational Airport", result.get(0).getName());
+    }
+
+    @Test
+    public void testFindDestinationsByOrigin_SFIA() {
+        String originCode = "GBIA";
+        AirportEntity destination1 = new AirportEntity("SFIA", "San Francisco International Airport");
+
+        when(flightDAO.findDestinationsByOrigin(originCode)).thenReturn(List.of(destination1));
+
+        List<AirportEntity> result = flightService.findDestinationsByOrigin(originCode);
+        assertEquals(1, result.size());
+        assertEquals("SFIA", result.get(0).getCode());
+        assertEquals("San Francisco International Airport", result.get(0).getName());
+    }
+
+    @Test
+    public void testFindDestinationsByOrigin_FKFI() {
+        String originCode = "GBIA";
+        AirportEntity destination1 = new AirportEntity("FKFI", "Frankfurt Airport");
+
+        when(flightDAO.findDestinationsByOrigin(originCode)).thenReturn(List.of(destination1));
+
+        List<AirportEntity> result = flightService.findDestinationsByOrigin(originCode);
+        assertEquals(1, result.size());
+        assertEquals("FKFI", result.get(0).getCode());
+        assertEquals("Frankfurt Airport", result.get(0).getName());
+    }
 
     // TESTS
     // FIND FLIGHTCODE
