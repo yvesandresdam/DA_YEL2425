@@ -37,12 +37,11 @@ public class TicketService {
 
         if (passenger == null)
             return false;
-
         try {
             ticketDAO.save(newTicket);
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }

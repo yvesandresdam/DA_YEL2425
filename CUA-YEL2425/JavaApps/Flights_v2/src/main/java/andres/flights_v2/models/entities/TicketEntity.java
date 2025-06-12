@@ -27,8 +27,7 @@ import java.time.LocalDate;
 @Table(name = "tickets")
 public class TicketEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tickets_id_gen")
-    @SequenceGenerator(name = "tickets_id_gen", sequenceName = "ticket1_ticket_number_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ticket_number", nullable = false)
     private Integer id;
 

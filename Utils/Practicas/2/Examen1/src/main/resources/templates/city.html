@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>City</title>
+    <link rel="stylesheet" th:href="@{/css/city.css}">
+    <link rel="stylesheet" href="../static/css/city.css">
+</head>
+<body>
+<main>
+    <h1>Cities</h1>
+    <select id="combo">
+        <option>Ciudad</option>
+        <option
+                th:each="codigo : ${codes}"
+                th:value="${codigo}"
+                th:text="${codigo}">
+        </option>
+    </select>
+    <p id="city"></p>
+</main>
+<script>
+    var infoCity = document.getElementById("combo");
+    var infodetail = document.getElementById("city");
+    infoCity.addEventListener('change', function () {
+        const code = this.value;
+        loadCityWithCode(code);
+    });
+
+    function loadCityWithCode(code) {
+        fetch(`http://localhost:8080/flights_api/cities/partial/${code}`)
+            .then(response => response.json())
+            .then(data => {
+                infodetail.innerText = data[0];
+            });
+    }
+</script>
+</body>
+</html>

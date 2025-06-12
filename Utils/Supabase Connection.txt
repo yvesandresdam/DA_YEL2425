@@ -1,0 +1,8 @@
+user:
+yveelilop@alu.edu.gva.es
+pass:
+la de siempre
+password database:
+1_dam_exam
+connection string:
+jdbc:postgresql://aws-0-eu-west-2.pooler.supabase.com:5432/postgres?user=postgres.hecqlpcowfdvvkyhjpdi&password=1_dam_exam

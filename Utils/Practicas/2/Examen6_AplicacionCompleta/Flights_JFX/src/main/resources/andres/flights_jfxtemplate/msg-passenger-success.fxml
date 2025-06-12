@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      alignment="CENTER"
+      spacing="20.0"
+      prefWidth="400.0"
+      prefHeight="300.0"
+      fx:controller="andres.flights_jfxtemplate.Bridges.Ticket_in_Passenger">
+
+    <children>
+        <Label text="Pasajero creado correctamente" style="-fx-font-size: 18px;"/>
+        <Button text="Volver a Tickets" fx:id="buttonNextScreen" onAction="#loadTicketScreen"/>
+    </children>
+
+</VBox>

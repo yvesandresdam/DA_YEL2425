@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>INFO</title>
+    <link rel="stylesheet" th:href="@{/css/info.css}">
+    <link rel="stylesheet" href="../static/css/info.css">
+</head>
+<body>
+<h1>Welcome to INFO</h1>
+<ul>
+    <li th:each="companyName: ${company}"
+        th:text="${cityEntity.name} + ' - ' + ${companyName}">
+    </li>
+</ul>
+
+</body>
+</html>

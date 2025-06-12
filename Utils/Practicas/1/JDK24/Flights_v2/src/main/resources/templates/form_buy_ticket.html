@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Flight Ticket Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+
+<body>
+<div class="form-container">
+    <form th:action="@{/Web/Tickets/CreateTicket}" method="post" th:object="${ticketDTO}">
+        <!-- DATE OF FLIGHT -->
+        <div class="form-group">
+            <label for="flightDate">Date of Flight:</label>
+            <input type="date" id="flightDate" name="flightDate" th:field="*{dateOfTravel}"
+            th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required/>
+        </div>
+
+        <!-- SOURCE -->
+        <div class="form-group">
+            <label for="source">Source:</label>
+            <select id="source" name="source">
+                <option value="">Select an origin</option>
+                <option th:each="airport : ${origins}"
+                        th:value="${airport.code}"
+                        th:text="${airport.code} + ' - ' + ${airport.name}">
+                </option>
+            </select>
+        </div>
+
+        <!-- DESTINATION -->
+        <div class="form-group">
+            <label for="destination">Destination:</label>
+            <select id="destination" name="destination">
+                <option value="">Select a destination</option>
+            </select>
+        </div>
+
+        <!-- PASSPORT -->
+        <div class="form-group">
+            <label for="passport">Passport:</label>
+            <input type="text" id="passport" name="passport" th:field="*{passportno}" placeholder="Introduce el pasaporte" required>
+        </div>
+
+        <!-- FLIGHT CODE -->
+        <div class="form-group">
+            <label for="flightCode">Flight:</label>
+            <select id="flightCode" name="flightCode">
+                <option value="">Select a flight</option>
+            </select>
+        </div>
+
+        <!-- BUTTON BUY TICKET -->
+        <button type="submit" id="buyTicket">Buy Ticket</button>
+    </form>
+</div>
+
+<script>
+    const originSelect = document.getElementById('source');
+    const destinationSelect = document.getElementById('destination');
+    const flightCodeSelect = document.getElementById('flightCode');
+
+    originSelect.addEventListener('change', function () {
+        const originId = this.value;
+        loadDestinationsForAirportWithCode(originId);
+    });
+
+    destinationSelect.addEventListener('click', function () {
+        const originId = originSelect.value;
+        const destinationId = destinationSelect.value;
+        loadFlightCode(originId, destinationId);
+    });
+
+    // DESTINATION RENDERING DESTINATIONS
+    function loadDestinationsForAirportWithCode(originId) {
+        fetch(`http://localhost:8080/flights_api/Web/Flights/Destinations/${originId}`)
+            .then(response => response.json())
+            .then(data => {
+                destinationSelect.innerHTML = '';
+                data.forEach(dest => {
+                    const option = document.createElement('option');
+                    option.value = dest.code;
+                    option.text = dest.code + ' - ' + dest.name;
+                    destinationSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching destinations:', error);
+            });
+    }
+
+    // FLIGHT_CODE RENDERING FLIGHTCODE
+    function loadFlightCode(originId, destinationId) {
+        fetch(`http://localhost:8080/flights_api/Web/Flights/${originId}/${destinationId}`)
+            .then(response => response.json())
+            .then(data => {
+                flightCodeSelect.innerHTML = '';
+                data.forEach(element => {
+                    const option = document.createElement('option');
+                    option.value = element;
+                    option.text = element;
+                    flightCodeSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching flight codes:', error);
+            });
+    }
+</script>
+</body>
+
+</html>
