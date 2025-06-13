@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/estilos_cancel.css}">
+    <title>Cancel Ticket Form</title>
+</head>
+<body>
+<form method="post" th:action="@{/Web/Tickets/CancelTicket}">
+    <main>
+        <h3>Cancel Ticket</h3>
+        <div id="form_content">
+            <label>Passport Nm</label>
+            <input type="text" id="passportNM"/>
+            <p>Flight Dt</p>
+            <input type="date" id="date"/>
+            <button type="submit">Billete Cancelado</button>
+        </div>
+    </main>
+</form>
+
+</body>
+</html>
